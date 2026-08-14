@@ -82,9 +82,10 @@ export interface FigmaEntry {
   note?: string
   /**
    * One line naming this screen's choreographed set piece, if it has one.
-   * Presence of the field is what puts the animated trace on the rail entry and
-   * the Replay button in the toolbar, so it is the single source of truth for
-   * "this screen is worth watching, not just looking at".
+   * Presence of the field is what puts the animated trace on the rail entry, so
+   * it is the single source of truth for "this screen is worth watching, not
+   * just looking at". It used to drive a Replay button in the toolbar too; that
+   * came and went as you moved around and has been removed.
    */
   motion?: string
 }

@@ -49,7 +49,20 @@ export function PackSelect() {
   const closeSheet = useUiStore((x) => x.closeSheet)
   const navigate = useUiStore((x) => x.navigate)
   const back = useUiStore((x) => x.back)
+  const hasHistory = useUiStore((x) => x.history.length > 0)
   const toast = useUiStore((x) => x.toast)
+
+  /*
+   * 04.1 is where this screen is reached from, so that is where back goes when
+   * there is no history to pop.
+   *
+   * `back()` returns the state untouched on an empty history, and history is
+   * empty in the two ways a reviewer actually arrives: a pasted link to
+   * #/trip/packs, and the index rail — `jump` clears history by design. Both
+   * left the chevron drawn, enabled, and doing nothing. Same fix, and same
+   * reason, as the one on 05.1.
+   */
+  const onBack = () => (hasHistory ? back() : navigate('trip', 'pop'))
 
   const recommendedId = recommendation?.pack.id ?? null
   const others = ranked.filter((r) => r.pack.id !== recommendedId)
@@ -80,7 +93,7 @@ export function PackSelect() {
       top={
         <>
           <StatusBar />
-          <NavBar title={COPY.packs.navTitle} onBack={back} />
+          <NavBar title={COPY.packs.navTitle} onBack={onBack} />
         </>
       }
       bottom={

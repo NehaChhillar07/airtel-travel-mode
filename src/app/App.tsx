@@ -3,7 +3,7 @@ import { MotionConfig } from 'motion/react'
 import { DeviceFrame } from './DeviceFrame'
 import { IndexRail } from './IndexRail'
 import { ScreenHost } from './ScreenHost'
-import { ROUTES, motionNoteFor } from './routes'
+import { ROUTES } from './routes'
 import { useHashRoute } from './useHashRoute'
 import { useIndexSync } from './useIndexSync'
 import { useViewport } from './useViewport'
@@ -20,11 +20,6 @@ export function App() {
   const back = useUiStore((s) => s.back)
   const railOpen = useUiStore((s) => s.railOpen)
   const setRailOpen = useUiStore((s) => s.setRailOpen)
-  const replayMotion = useUiStore((s) => s.replayMotion)
-
-  /* Only screens with a set piece get the Replay button — on the rest there
-     would be nothing to watch happen. */
-  const motionNote = motionNoteFor(route, figmaEntry)
 
   const { mode, compact } = useViewport()
   const bleed = mode === 'bleed'
@@ -98,18 +93,22 @@ export function App() {
               </button>
               <span className="stage__name">{figmaEntry ?? ROUTES[route].title}</span>
 
-              {/* Remounts the screen, so every mount animation runs again from
-                  zero. The note is what you are about to watch. */}
-              {motionNote && (
-                <button
-                  className="stage__btn stage__btn--replay"
-                  onClick={replayMotion}
-                  title={motionNote}
-                >
-                  <span className="stage__replayIcon" aria-hidden="true" />
-                  Replay
-                </button>
-              )}
+              {/*
+                No Replay button.
+
+                It was rendered whenever `motionNoteFor` found a set piece for
+                the current screen, which made it come and go as you moved
+                around — and worse, `navigate` never clears `figmaEntry`, so
+                arriving from the index and then walking forward left it on
+                screens it did not belong to, captioned with the previous
+                screen's motion note. A control that appears on some screens
+                and not others, sometimes wrongly, is not worth the one thing
+                it does. Replaying is a reload.
+
+                `replayMotion` and `motionRun` stay in the store, and `motion`
+                on a FIGMA_INDEX entry still marks the rail item — that part
+                was never the problem.
+              */}
 
               <button className="stage__btn" onClick={() => setRailOpen(!railOpen)}>
                 {railOpen && !compact ? 'Hide index' : 'Screens'}
