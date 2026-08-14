@@ -1,0 +1,89 @@
+/**
+ * The 393x852 viewport.
+ *
+ * Replaces src/legacy/render/ScreenView.tsx, which lifted nodes Figma had
+ * marked `scrollBehavior: FIXED` out of an absolutely-positioned tree and
+ * pinned them by hand. With real components the same thing is three flex rows.
+ */
+
+/* `position: relative` so a screen can float chrome over its own body — the
+   home screen's bottom nav sits above the scroll, not inside it. */
+.screen {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  /*
+    The screen takes its size from the stack it sits in, rather than declaring
+    393x852 itself. In framed mode the stack is exactly that; in full bleed it
+    is 393 wide by whatever the device's height divides down to, and a screen
+    that hardcoded 852 would either overflow or leave a band of ground.
+  */
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  /*
+    The presenter shell around the phone is dark, so `body` is white-on-#17181b.
+    A screen has to state its own text colour or anything inside it that draws
+    in `currentColor` and is not a `t-*` class — icons, glyphs, rules — inherits
+    that white and disappears against the light frame.
+  */
+  color: var(--text-primary);
+}
+
+.page { background: var(--bg-screen); }
+.card { background: var(--bg-card); }
+.raised { background: var(--bg-raised); }
+.ink {
+  background: var(--p-ink-800);
+  color: var(--text-inverse);
+}
+
+.top {
+  flex: 0 0 auto;
+  position: relative;
+  z-index: var(--z-sticky);
+}
+
+/* Opaque chrome would hide content scrolling beneath it; a blur reads as glass
+   the way the source screens do. */
+.topGlass {
+  backdrop-filter: var(--blur-chrome);
+  -webkit-backdrop-filter: var(--blur-chrome);
+  background: color-mix(in srgb, var(--bg-screen) 88%, transparent);
+}
+
+.body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.body::-webkit-scrollbar {
+  display: none;
+}
+
+/* The file draws the action bar as a rounded sheet lifting off the scroll —
+   16px top corners over the same -1px shadow. */
+.bottom {
+  flex: 0 0 auto;
+  position: relative;
+  z-index: var(--z-sticky);
+  box-shadow: var(--sh-bar);
+  background: var(--bg-screen);
+  border-radius: var(--r-field) var(--r-field) 0 0;
+}
+
+.bottomTransparent {
+  box-shadow: none;
+  background: transparent;
+}
+
+/* Standard content inset. The design is a 353px column in a 393px frame. */
+.gutter {
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}

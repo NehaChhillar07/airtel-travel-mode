@@ -1,0 +1,174 @@
+/**
+ * 05.6 Pack ended.
+ *
+ * Measured off the frame the assignment ships as CSS. The numbers in the
+ * comments are the ones from that export.
+ *
+ * The frame's instinct is worth naming, because it is the reason this screen
+ * is not alarming: it says the pack ended, then immediately says nothing was
+ * cut off, then shows a full row of green days. Only one element on the whole
+ * screen is red, and it is the one thing that is actually still costing money.
+ */
+
+/* `Trip progress` — 20px on every side, so the column inside is 351px. */
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* `Frame 1321322912` — the header block, 26px above the strip block. */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+/* `Frame 1321322910` — the day count against the date it ended. Both are
+   `text/primary`; nothing here is muted. */
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.headDay,
+.headEnded { color: var(--text-primary); }
+
+/* `Frame 1321322911` — the headline block over the strip, 15px apart. */
+/* `Frame 1321322934` — the two sentences ride together, 8px apart. The second
+   one is the whole reassurance, so it is not a footnote to the first. */
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.titleBody {
+  max-width: 334px;
+  color: var(--text-primary);
+}
+
+/* ----------------------------------------------------------- charged card
+   `Frame 1321322906` — 12/16 padded, 15px radius, on `red/050` at a quarter
+   strength. A wash rather than a block: Airtel never alarms in saturated red,
+   and this is a running total, not a failure. */
+
+.charged {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 15px;
+  background: color-mix(in srgb, var(--bg-alert) 25%, transparent);
+}
+
+.chargedHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* `Frame 1321322903` — the figure and its note, on a shared baseline. The
+   figure is `red/700`, the deeper red, so it holds at 24px against the wash
+   behind it. It is the only red thing on the screen. */
+.chargedValue {
+  display: flex;
+  align-items: flex-end;
+  gap: 9px;
+}
+
+.chargedAmount { color: var(--p-red-700); }
+.chargedNote { color: var(--text-primary); }
+
+/*
+  The live paise. Set smaller and a shade lighter than the rupees so the figure
+  still reads as ₹450 at a glance — the moving digits are evidence that it is
+  running, not part of the number you are meant to take away. Tabular, so they
+  do not shuffle the "counting up" beside them as they turn over.
+*/
+.chargedPaise {
+  margin-left: -6px;
+  color: color-mix(in srgb, var(--p-red-700) 65%, transparent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------- what made it up
+   One row per day past the pack. Hairline-separated rather than boxed: they
+   are the arithmetic behind the figure above, not a second card. */
+
+.chargedRows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid color-mix(in srgb, var(--status-critical) 22%, transparent);
+}
+
+.chargedRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.chargedRowLabel { color: var(--text-primary); }
+
+.chargedFoot {
+  display: block;
+  color: var(--text-secondary);
+}
+
+/* ------------------------------------------------------------------ actions
+   Two exits, ranked. Black is the recovery and comes first; red stops the
+   bleeding and comes second. Reversing them would make the drastic option
+   read as the recommended one. */
+
+/* `Button` — 351x70, 16/24 padded, a stacked label with the price hung off
+   the top-right corner. */
+.addBtn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 70px;
+  padding: 16px 24px;
+  border-radius: var(--r-lg);
+  background: var(--p-black);
+  border: 1px solid var(--p-black);
+  color: var(--text-inverse);
+  text-align: left;
+}
+
+.addTitle { color: var(--text-inverse); }
+
+/* `#F8F9FE` rather than a dimmed white: the sub-line and the price are the
+   same value, and the frame keeps both fully legible. */
+.addSub,
+.addFrom { color: var(--bg-card); }
+
+.addFrom {
+  position: absolute;
+  right: 24px;
+  top: 18px;
+}
+
+/* `Frame 1321322933` — 48px, `#D73737`, filled. The one place the file fills
+   with the alert red, and it is a button you have to choose. */
+.stopBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: var(--r-lg);
+  background: var(--status-critical);
+  border: 1px solid var(--status-critical);
+  color: var(--text-inverse);
+}

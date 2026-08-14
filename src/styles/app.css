@@ -1,0 +1,575 @@
+/**
+ * The presenter shell — the dark room the phone sits in.
+ *
+ * This is the only stylesheet allowed to use raw colour values, because it is
+ * not the product. Everything inside the device frame uses the Foundations
+ * tokens.
+ */
+
+.app {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------------- rail */
+
+.rail {
+  flex: 0 0 246px;
+  width: 246px;
+  padding: 26px 18px 20px;
+  overflow-y: auto;
+  background: #101114;
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  transition: margin-left 220ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.rail__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(0, 0, 0, 0.55);
+  border: none;
+}
+
+.rail__head h1 { margin: 0; font: 700 20px/26px 'Poppins', sans-serif; }
+.rail__head p { margin: 4px 0 0; font-size: 12px; color: rgba(255, 255, 255, 0.4); }
+
+.rail__group { margin-top: 22px; }
+.rail__group h2 {
+  margin: 0 0 7px;
+  font: 700 11px/16px 'Poppins', sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.34);
+}
+
+.rail__item {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 9px;
+  border-radius: 9px;
+  text-align: left;
+  font-size: 12.5px;
+  line-height: 17px;
+  color: rgba(255, 255, 255, 0.72);
+}
+.rail__item:hover { background: rgba(255, 255, 255, 0.07); }
+.rail__item--on { background: rgba(255, 255, 255, 0.15); color: #fff; }
+
+.rail__num { flex: 0 0 34px; color: rgba(255, 255, 255, 0.38); font-variant-numeric: tabular-nums; }
+.rail__item--on .rail__num { color: rgba(255, 255, 255, 0.7); }
+.rail__label { flex: 1 1 auto; }
+
+/* Marks an entry whose rebuild deliberately departs from the static screen.
+   The reason is on the button's title attribute. */
+.rail__flag {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-left: 6px;
+  border-radius: 999px;
+  background: #d7a03a;
+  vertical-align: middle;
+}
+
+/* ------------------------------------------------ "this screen is animated"
+
+   A chip, not a hairline. The old treatment was a light running a 20px track,
+   which demonstrated motion beautifully and advertised it terribly — at a
+   glance down the list it read as a divider. This says the word.
+
+   Bright on purpose: the rail is presenter chrome sitting on near-black, not
+   Airtel product surface, so it can carry a colour the palette would never
+   allow on a screen. It still breathes, one entry after another, so the badge
+   is a small instance of the thing it is pointing at. */
+
+.rail__motion {
+  display: inline-block;
+  margin-left: 7px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: #6ef7b0;
+  color: #063723;
+  /* Small enough that "05.4 Trip dashboard" still fits on one line in a 246px
+     rail — the chip is a marker, not a heading. */
+  font: 700 8px/12px 'Poppins', sans-serif;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  vertical-align: 1px;
+  box-shadow: 0 0 10px -1px rgba(110, 247, 176, 0.55);
+  animation: railMotionChip 3.4s ease-in-out infinite;
+  animation-delay: var(--chip-delay, 0s);
+}
+
+@keyframes railMotionChip {
+  0%, 62%, 100% { opacity: 0.72; box-shadow: 0 0 0 0 rgba(110, 247, 176, 0); }
+  20% { opacity: 1; box-shadow: 0 0 12px 0 rgba(110, 247, 176, 0.6); }
+}
+
+/* Pointing at the entry, or being on it, settles the chip at full strength —
+   the pulse is for finding it in the list, not for reading it. */
+.rail__item--motion:hover .rail__motion,
+.rail__item--on .rail__motion {
+  animation: none;
+  opacity: 1;
+  box-shadow: 0 0 12px -1px rgba(110, 247, 176, 0.6);
+}
+
+/* What you are about to watch is on the button's `title`, and the Replay
+   button in the toolbar runs it again. */
+
+@media (prefers-reduced-motion: reduce) {
+  .rail__motion { animation: none; opacity: 1; }
+}
+
+.rail__foot { margin-top: 26px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+.rail__toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.72);
+  cursor: pointer;
+}
+.rail__note { margin: 12px 0 0; font-size: 11.5px; line-height: 16px; color: rgba(255, 255, 255, 0.32); }
+
+/* ------------------------------------------------------------------ stage */
+
+.stage {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px;
+  background: radial-gradient(120% 90% at 50% 0%, #3a3d43 0%, #232529 55%, #17181b 100%);
+}
+
+.stage__bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 520px;
+}
+
+.stage__name {
+  flex: 1 1 auto;
+  text-align: center;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.stage__btn {
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.85);
+}
+.stage__btn:hover:not(:disabled) { background: rgba(255, 255, 255, 0.16); }
+.stage__btn:disabled { opacity: 0.3; cursor: default; }
+
+/* Appears only on screens that have a set piece — see motionNoteFor(). */
+.stage__btn--replay {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(121, 208, 153, 0.16);
+  color: #a9e2c0;
+}
+.stage__btn--replay:hover:not(:disabled) { background: rgba(121, 208, 153, 0.26); }
+
+.stage__replayIcon {
+  width: 12px;
+  height: 12px;
+  border: 1.6px solid currentColor;
+  /* Open at the top-right so it reads as a rotation arrow, not a ring. */
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-radius: 999px;
+  transition: transform 420ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.stage__btn--replay:hover .stage__replayIcon { transform: rotate(-320deg); }
+
+.stage__hint { margin: 0; font-size: 11.5px; color: rgba(255, 255, 255, 0.3); }
+
+/* ------------------------------------------------------------------ phone */
+
+.phone {
+  flex: 0 0 auto;
+  position: relative;
+}
+
+.phone__bezel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 9px;
+  border-radius: 58px;
+  background: linear-gradient(160deg, #4a4d52 0%, #131417 42%, #35383d 100%);
+  box-shadow: 0 40px 80px -22px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* The screen stack owns the clipping, so an incoming and an outgoing screen
+   are masked by the same rounded rectangle while they cross. */
+.screenstack {
+  position: relative;
+  width: 393px;
+  height: 852px;
+  border-radius: 50px;
+  overflow: hidden;
+  background: var(--bg-screen);
+  isolation: isolate;
+}
+
+.screenstack__stage {
+  position: absolute;
+  inset: 0;
+}
+
+.screenstack__layer {
+  position: absolute;
+  inset: 0;
+  will-change: transform, opacity;
+}
+
+/*
+  Reads as a surface lifted above the one behind it — and only then.
+
+  The shadow used to be unconditional. At rest there is one screen and nothing
+  for it to lift above, so all it did was smear a grey gradient down the left
+  edge of every screen. Framed mode hid that inside the bezel; full bleed put it
+  on the display.
+
+  The condition is "two screens are crossing", and it has to be stated as
+  literally that. `:not(:only-child)` was wrong: the stage also holds the toast
+  layer and the Figma ghost, so a layer is never an only child and the shadow
+  never went away. `:has(> .layer ~ .layer)` asks the actual question — is there
+  a second SCREEN — and answers it only during a transition.
+*/
+.screenstack__stage:has(> .screenstack__layer ~ .screenstack__layer)
+  > .screenstack__layer {
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.22);
+}
+
+/*
+  The reveal's leading edge.
+
+  The same glowing hairline the departure sequence ends on, so the everyday
+  transition and the set piece are visibly the same material. It rides the
+  clip-path's boundary — see ScreenHost for why one motion value drives both.
+
+  Sized rather than scaled, for the same reason as the curtain's iris: the
+  gradient stops and the shadows are in absolute pixels measured from the edge,
+  so the band of light keeps its width instead of smearing as the circle grows.
+*/
+.screenstack__revealRing {
+  position: absolute;
+  border-radius: 50%;
+  box-sizing: content-box;
+  background: radial-gradient(
+      circle closest-side,
+      rgba(215, 55, 55, 0) calc(100% - 16px),
+      rgba(215, 55, 55, 0.07) calc(100% - 10px),
+      rgba(215, 55, 55, 0.20) calc(100% - 5px),
+      rgba(215, 55, 55, 0.38) calc(100% - 2px),
+      rgba(215, 55, 55, 0.5) 100%
+    );
+  /*
+    A ring of light, with no line in it anywhere.
+
+    Built from two falloffs that meet at the edge and never resolve to a stroke:
+    a radial gradient carries the glow INWARD from the boundary, and box-shadows
+    carry it OUTWARD. Both peak at the same alpha at the same place, so the
+    handover is continuous and there is no hard core hiding inside the bloom.
+
+    `closest-side` is load-bearing, and leaving it out is a subtle bug rather
+    than a subtle difference. A `radial-gradient(circle, ...)` defaults to a
+    FARTHEST-CORNER ending shape, so 100% is the distance to the box's corner —
+    1.41x the radius — and every stop written as an offset from "the edge" is
+    really an offset from a point well outside the circle. The band ends up
+    sitting at ~0.7R and scaling its width with the circle, which is exactly the
+    fat pink donut this was trying not to be. `closest-side` makes 100% the
+    radius, so `calc(100% - 16px)` is genuinely 16px in from the edge at every
+    size.
+
+    box-shadow rather than filter: blur() — a filter re-rasterises the whole
+    element every frame, and this one grows to cover the screen.
+
+    The shape of the falloff is what makes it read as light rather than as a
+    thick band: a bright, narrow crest right at the boundary, then a long gentle
+    fade inward over ~30px and a shorter one outward. An even plateau across the
+    same width just looks like a fat pink ring.
+
+    Width matters as much as shape. The first pass ran ~30px of falloff either
+    side, which is 60px of pink crossing a 393px screen — 15% of the width, and
+    it read as a donut no matter how softly it was drawn. Roughly 15px in and
+    16px out is the point where it stops being an object and starts being a
+    glow.
+  */
+  border: none;
+  box-shadow:
+    0 0 6px 0 rgba(215, 55, 55, 0.40),
+    0 0 16px 1px rgba(215, 55, 55, 0.13);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/*
+  Overlay root for every sheet, modal and toast. It must live inside the
+  bezel — see DeviceFrameContext.tsx for why. `pointer-events: none` so the
+  empty container never swallows taps meant for the screen; each overlay turns
+  them back on for itself.
+*/
+.screenstack__portal {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-portal);
+  pointer-events: none;
+  /*
+    The transform is load-bearing, not a paint hint. vaul and Radix position
+    their overlays with `position: fixed`. Without this, the nearest transformed
+    ancestor is `.phone__bezel`, so a sheet would fill the bezel — 9px of
+    aluminium included — and escape `.screenstack`'s rounded clip. Making the
+    portal its own containing block pins every overlay to the screen exactly.
+  */
+  transform: translate(0);
+}
+.screenstack__portal > * {
+  pointer-events: auto;
+}
+
+/* ------------------------------------------------------------------ ghost */
+
+.ghost {
+  position: absolute;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  opacity: 0.85;
+}
+.ghost__img {
+  display: block;
+  width: 393px;
+  /* The exports are 2x and taller than the viewport on scrolling screens;
+     pinning the width aligns them at the top edge. */
+  height: auto;
+}
+
+/* ---------------------------------------------------------- compact layout
+   Below 1000px the index becomes an overlay drawer and the device scales to
+   whatever room is left, so a phone shows the whole screen rather than a
+   cropped sliver of it. */
+
+.app--compact .rail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  width: min(310px, 86vw);
+  flex-basis: auto;
+  transform: translateX(-100%);
+  transition: transform 260ms cubic-bezier(0.2, 0, 0, 1);
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.55);
+}
+
+.app--compact .rail--open { transform: none; }
+
+.app--compact .stage {
+  padding: 10px 8px 14px;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+.app--compact .stage__bar { max-width: none; gap: 8px; }
+.app--compact .stage__name { font-size: 12px; }
+.app--compact .stage__btn { padding: 8px 12px; font-size: 12px; }
+
+/* The rail is a column on desktop; hiding it should not leave a gap. */
+.rail:not(.rail--open) { margin-left: -246px; }
+.app--compact .rail:not(.rail--open) { margin-left: 0; }
+
+@media (hover: none) {
+  .rail__item:hover { background: rgba(255, 255, 255, 0.06); }
+  .rail__item--on:hover { background: rgba(255, 255, 255, 0.16); }
+}
+
+/* ============================================================ full bleed
+   On a phone the presenter is not a frame, it is a tax. A 393x852 canvas
+   scaled to fit inside a 393x852 device renders at 87%, and at 66% on an SE,
+   with a drawn bezel taking the difference. Below 600px the whole shell comes
+   off and the design becomes the viewport.
+
+   The canvas keeps its 393 logical width and is scaled up to the device — see
+   DeviceFrame.tsx for why that beats making every component responsive. The
+   two custom properties below are written by that measure loop. */
+
+[data-mode='bleed'] .stage {
+  padding: 0;
+  gap: 0;
+  background: var(--bg-screen);
+  /* Nothing may scroll the shell; scrolling belongs to a screen's body. */
+  overflow: hidden;
+}
+
+/* The bezel is gone, so these two are pure pass-throughs. `fixed` rather than
+   `absolute` because the scaled stack's layout box is still 393px wide and
+   would otherwise size — and overflow — its parent. */
+[data-mode='bleed'] .phone,
+[data-mode='bleed'] .phone__bezel {
+  position: fixed;
+  inset: 0;
+  width: auto;
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+[data-mode='bleed'] .screenstack {
+  width: 393px;
+  height: var(--bleed-h, 852px);
+  border-radius: 0;
+  transform: scale(var(--bleed-scale, 1));
+  transform-origin: top left;
+}
+
+/*
+  Safe areas.
+
+  In a browser tab both insets are 0 — the visual viewport already sits below
+  the browser's chrome — so the drawn status bar is the only one on screen and
+  everything reads exactly as designed. Installed to the home screen there IS a
+  real iOS status bar over the top of the page, so the drawn one is dropped and
+  its space handed to the notch instead. Two status bars is the one thing a
+  full-bleed prototype must never show.
+*/
+@media (display-mode: standalone) {
+  [data-mode='bleed'] .screenstack {
+    /* Border-box, so the notch takes its space out of the screen rather than
+       adding to it and pushing the bottom of the design off the display. The
+       inset is in device pixels and the canvas is scaled, so it has to be
+       divided back out to mean the same distance. */
+    box-sizing: border-box;
+    padding-top: calc(env(safe-area-inset-top, 0px) / var(--bleed-scale, 1));
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) / var(--bleed-scale, 1));
+  }
+  [data-mode='bleed'] [data-chrome='status'] {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------- index in bleed
+   The rail is a review tool, not part of the product, so on a phone it starts
+   out of the way and is summoned. It was defaulting to open and covering 78%
+   of the screen — the first thing anyone opening the link on a phone saw was
+   a screen index, not the app. */
+
+[data-mode='bleed'] .rail {
+  width: min(340px, 88vw);
+  padding-top: max(26px, env(safe-area-inset-top, 0px));
+  padding-bottom: max(20px, env(safe-area-inset-bottom, 0px));
+}
+
+/*
+  The way back in.
+
+  A tab on the left edge, not a floating pill in a corner. The pill was
+  bottom-right, which is exactly where every screen in this design puts its
+  primary action — on a 553pt SE it sat on top of "View Packs For This Trip".
+  There is no free corner in a full-bleed phone layout, but there is a free
+  EDGE: the 20px gutter runs the full height of every screen, and the left one
+  is also where the drawer comes from, so the tab points at what it opens.
+
+  Deliberately quiet. It is presenter chrome sitting on a product screen.
+*/
+.bleedOpener {
+  position: fixed;
+  left: 0;
+  top: 42%;
+  z-index: 95;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  width: 26px;
+  padding: 14px 0 13px;
+  border-radius: 0 10px 10px 0;
+  background: rgba(16, 17, 20, 0.74);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font: 700 8.5px/10px 'Poppins', sans-serif;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 6px 22px -8px rgba(0, 0, 0, 0.55);
+}
+
+/* Reading bottom-to-top, the way an edge tab is read. */
+.bleedOpener__label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.bleedOpener__bars {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5px;
+}
+.bleedOpener__bars i {
+  display: block;
+  width: 11px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: currentColor;
+}
+
+/* ------------------------------------------------------------- landscape
+   A portrait design at 852x393 has nowhere to go, and shrinking it to fit is
+   worse than asking. */
+
+.rotate {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 24px;
+  text-align: center;
+  background: radial-gradient(120% 90% at 50% 0%, #3a3d43 0%, #232529 55%, #17181b 100%);
+  color: #fff;
+}
+
+.rotate__icon {
+  width: 34px;
+  height: 54px;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  border-radius: 7px;
+  animation: rotateHint 2.6s cubic-bezier(0.2, 0, 0, 1) infinite;
+}
+
+.rotate h1 { margin: 0; font: 700 17px/24px 'Poppins', sans-serif; }
+.rotate p { margin: 0; max-width: 30ch; font-size: 13px; line-height: 19px; color: rgba(255, 255, 255, 0.55); }
+
+@keyframes rotateHint {
+  0%, 22% { transform: rotate(-90deg); }
+  50%, 78% { transform: rotate(0deg); }
+  100% { transform: rotate(-90deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rotate__icon { animation: none; }
+}

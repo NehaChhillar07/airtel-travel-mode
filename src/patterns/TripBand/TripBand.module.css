@@ -1,0 +1,119 @@
+/**
+ * `Frame 1321322918` — 393x175, the artwork bleeding to both edges with a
+ * mirror panel floating on it.
+ */
+
+.band {
+  position: relative;
+  flex: 0 0 auto;
+  padding: 23px 25px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* The artwork, at full clarity. Nothing is laid over it — only the panel in
+   the middle of the frame treats what is behind it. */
+.bandBg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/*
+  `Frame 40` — 346x129, 12px padded, an 8px column gap.
+
+  The mirror. Figma's payload for this is `{"type":"GLASS"}` with no parameters
+  at all, so it is built the way a mirrored panel actually behaves rather than
+  copied off a hex: it takes what is behind it, throws it out of focus, lifts
+  and saturates it, and edges the result in a lit hairline. The three layers
+  are what make it a block rather than a translucent rectangle —
+
+    blur + saturate + brightness   the reflection itself
+    the white gradient             the sheen falling down the face
+    inset top highlight + ring     the lit edge that gives it thickness
+
+  Dialled back from the first pass, which mirrored too hard: `saturate(1.8)`
+  was amplifying whatever happened to sit behind the panel, so the yellow of
+  the suitcase burned through the right-hand third and the readout had to
+  compete with it. More blur and much less saturation turn it from a mirror
+  into frosted glass — still clearly a surface with something behind it, but
+  the type on it wins. The dials, in order of effect: saturate, then the first
+  gradient stop, then the top inset highlight.
+*/
+.bandInner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  padding: 12px;
+  border-radius: var(--r-field);
+  /* Flatter than it was: the old 0.5 → 0.28 falloff drew a visible diagonal
+     streak across the face. */
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.46) 0%,
+    rgba(255, 255, 255, 0.38) 42%,
+    rgba(255, 255, 255, 0.42) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.42),
+    0 3px 14px -8px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(30px) saturate(1.12) brightness(1.03);
+  -webkit-backdrop-filter: blur(30px) saturate(1.12) brightness(1.03);
+}
+
+.chips {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.chips > * { flex: 0 0 auto; }
+
+.daysRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 30px;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 20px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--r-pill);
+  background: var(--status-success);
+}
+
+/* `Ellipse 7` on 05.3 is #CA272C, not the #D73737 the rest of the file
+   alarms in — the one node that still carries the legacy Airtel red. */
+.dotOff { background: var(--p-red-legacy); }
+/* No alert dot: `exhausted` deliberately keeps the green one. See TripBand.tsx. */
+
+/* Safari on iOS drops backdrop filters inside a transformed ancestor, which
+   the device frame is. With no reflection to draw, the panel falls back to a
+   flat sheen heavy enough to still read as a surface. */
+@supports not (backdrop-filter: blur(1px)) {
+  .bandInner {
+    background: linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.68) 0%,
+      rgba(255, 255, 255, 0.6) 42%,
+      rgba(255, 255, 255, 0.64) 100%
+    );
+  }
+}

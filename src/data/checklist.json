@@ -1,0 +1,40 @@
+[
+  {
+    "n": 1,
+    "title": "Turn on Data Roaming",
+    "why": "Your pack cannot start without it. This is the reason nine times out of ten.",
+    "settingsPath": "Settings › Mobile Network › Data Roaming",
+    "note": null,
+    "after": null,
+    "cta": "Open this setting",
+    "picks": []
+  },
+  {
+    "n": 2,
+    "title": "Choose Automatic",
+    "why": "This lets your phone find a network here by itself, instead of looking for your Indian one.",
+    "settingsPath": "Settings › Mobile Network › Network Selection",
+    "note": null,
+    "after": null,
+    "cta": "Open this setting",
+    "picks": [
+      { "label": "Automatic", "hint": "Pick this", "good": true },
+      { "label": "Manual", "hint": "Not this", "good": false }
+    ]
+  },
+  {
+    "n": 3,
+    "title": "Switch the phone off and on",
+    "why": "This makes it look for the network from the beginning. It often works when the first two did not.",
+    "settingsPath": null,
+    "note": [
+      "Hold the side button until the screen changes.",
+      "Slide to switch it off.",
+      "Count to ten.",
+      "Hold the same button until you see the logo."
+    ],
+    "after": "Then wait a minute. The name of a Singapore network will appear at the top of your screen.",
+    "cta": null,
+    "picks": []
+  }
+]

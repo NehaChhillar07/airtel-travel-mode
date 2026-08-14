@@ -1,0 +1,171 @@
+/**
+ * 05.12 Notification live activity widget.
+ *
+ * Every number here is out of the frame's own CSS export. The two states are
+ * one element — `.island` carries what survives the morph, and the two state
+ * classes carry what changes.
+ */
+
+.island {
+  position: relative;
+  margin: 0 auto;
+  width: 355px;
+  max-width: 100%;
+  cursor: pointer;
+}
+
+/* `Notification` — 355x64. The glass itself is the `ios-glass` class in
+   ios.css: the collapsed pill and the lock-screen banners are the same
+   material in the file, so they are the same class here. */
+.collapsed {
+  height: 64px;
+  color: var(--text-inverse);
+}
+
+/* `Frame 1321322865` — the expanded card is Airtel's surface, not the black
+   pill blown up: a Live Activity is drawn by the app that owns it. */
+.expanded {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-field);
+  background: var(--bg-raised);
+  color: var(--text-heading);
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------- collapsed */
+
+/* `Frame 1321322864` — 324 wide, 10px gaps, sitting 9px in from the left of
+   the pill and centred in its 64. */
+.pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 100%;
+  padding: 0 12px 0 9px;
+}
+
+/* 80x59 in a 64px pill — the plane is the widget's whole identity at a glance,
+   so it is drawn almost the full height of it. */
+.pillPlane {
+  flex: none;
+  width: 80px;
+  height: 59px;
+  object-fit: contain;
+  transform: scaleX(-1);
+}
+
+/* `Rectangle 1` and `Rectangle 2` — the fill is drawn 9px against a 7px track,
+   so it stands proud of the groove it runs in rather than sitting inside it. */
+.bar {
+  position: relative;
+  flex: none;
+  width: 153px;
+  height: 9px;
+}
+
+.bar::before {
+  content: '';
+  position: absolute;
+  top: 1px;
+  right: 0;
+  left: 0;
+  height: 7px;
+  border-radius: 11px;
+  background: var(--bg-track);
+}
+
+.barFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 9px;
+  min-width: 9px;
+  border-radius: 11px;
+  background: var(--bg-success);
+}
+
+/* -------------------------------------------------------------- expanded */
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* `Frame 1321322867` — 52px of black across the top, the app's own band. It is
+   the button: tapping a Live Activity opens the app that posted it. */
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  height: 52px;
+  padding: 16px;
+  background: var(--action-primary-fill);
+  text-align: left;
+}
+
+.headLeft {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.liveDot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: var(--r-pill);
+  background: var(--bg-success);
+}
+
+.headEmoji {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+/* `Frame 1321322871` — 323 wide inside 16px padding, 23px between blocks. */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+  padding: 16px;
+}
+
+.title {
+  color: var(--text-primary);
+}
+
+/* -------------------------------------------------------------- actions */
+
+/* `Frame 102` — two 48px buttons, 12px apart, each taking half the row. */
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.action {
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: var(--r-lg);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.actionPrimary {
+  background: var(--action-primary-fill);
+  color: var(--action-primary-text);
+}
+
+.actionSecondary {
+  border: 1px solid var(--action-secondary-border);
+  color: var(--text-heading);
+}

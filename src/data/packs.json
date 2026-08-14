@@ -1,0 +1,100 @@
+[
+  {
+    "id": "ir-asia-10d-2999",
+    "name": "Asia & Middle East 10-day",
+    "priceExGst": 2999,
+    "validityDays": 10,
+    "data": { "kind": "unlimited", "fupGb": 40, "postFupKbps": 80 },
+    "voiceMins": 100,
+    "sms": 100,
+    "countries": ["SG", "MY", "TH", "ID", "VN", "PH", "AE", "SA", "QA", "OM", "BH", "LK", "NP", "MV", "JP", "KR", "HK"],
+    "regions": ["Southeast Asia", "Middle East", "East Asia", "South Asia"],
+    "tier": "talk-and-data",
+    "inFlight": { "dataMb": 250, "mins": 100, "sms": 100, "validityHrs": 24 },
+    "perks": [
+      "40 GB high-speed data, then unlimited at 80 Kbps",
+      "100 minutes covers calls to India, and local calls both ways",
+      "Free incoming calls",
+      "One pack across every country on the list"
+    ],
+    "fairUse": "After the 40 GB, you'll get unlimited data at 80 Kbps for messaging, email and browsing.",
+    "reasonTemplates": {
+      "fits": "Covers all {countryCount} countries and outlasts your {days} days by {slack}",
+      "thin": "For maps and messages, if you call over Wi-Fi",
+      "upsell": "Worth it if the trip stretches, or you fly again this month",
+      "short": "Ends {shortBy} before you fly home"
+    },
+    "tags": ["popular", "best-value"]
+  },
+  {
+    "id": "ir-data-10d-1499",
+    "name": "Data only 10-day",
+    "priceExGst": 1499,
+    "validityDays": 10,
+    "data": { "kind": "metered", "gb": 5 },
+    "voiceMins": 0,
+    "sms": 0,
+    "countries": ["SG", "MY", "TH", "ID", "VN", "PH", "AE", "SA", "QA", "OM", "BH", "LK", "NP", "MV", "JP", "KR", "HK"],
+    "regions": ["Southeast Asia", "Middle East", "East Asia", "South Asia"],
+    "tier": "data-only",
+    "inFlight": null,
+    "perks": ["5 GB at full speed", "Incoming calls charged at standard roaming rates"],
+    "fairUse": "Data stops at 5 GB. Nothing is charged beyond it — you simply run out.",
+    "reasonTemplates": {
+      "fits": "Covers all {countryCount} countries for {days} days",
+      "thin": "For maps and messages, if you call over Wi-Fi",
+      "upsell": "Worth it if the trip stretches, or you fly again this month",
+      "short": "Ends {shortBy} before you fly home"
+    },
+    "tags": ["cheapest"]
+  },
+  {
+    "id": "ir-asia-30d-3999",
+    "name": "Asia & Middle East 30-day",
+    "priceExGst": 3999,
+    "validityDays": 30,
+    "data": { "kind": "unlimited", "fupGb": 60, "postFupKbps": 80 },
+    "voiceMins": 900,
+    "sms": 100,
+    "countries": ["SG", "MY", "TH", "ID", "VN", "PH", "AE", "SA", "QA", "OM", "BH", "LK", "NP", "MV", "JP", "KR", "HK"],
+    "regions": ["Southeast Asia", "Middle East", "East Asia", "South Asia"],
+    "tier": "talk-and-data",
+    "inFlight": { "dataMb": 250, "mins": 100, "sms": 100, "validityHrs": 24 },
+    "perks": [
+      "60 GB high-speed data, then unlimited at 80 Kbps",
+      "900 minutes covers calls to India, and local calls both ways",
+      "Free incoming calls",
+      "In-flight data on 26 airlines"
+    ],
+    "fairUse": "After the 60 GB, unlimited data continues at 80 Kbps.",
+    "reasonTemplates": {
+      "fits": "Covers all {countryCount} countries with room to spare",
+      "thin": "For maps and messages, if you call over Wi-Fi",
+      "upsell": "Worth it if the trip stretches, or you fly again this month",
+      "short": "Ends {shortBy} before you fly home"
+    },
+    "tags": []
+  },
+  {
+    "id": "ir-data-90d-5499",
+    "name": "Data only 90-day",
+    "priceExGst": 5499,
+    "validityDays": 90,
+    "data": { "kind": "unlimited", "fupGb": 30, "postFupKbps": 80 },
+    "voiceMins": 0,
+    "sms": 0,
+    "countries": ["SG", "MY", "TH", "ID", "VN", "PH", "AE", "SA", "QA", "OM", "BH", "LK", "NP", "MV", "JP", "KR", "HK"],
+    "regions": ["Southeast Asia", "Middle East", "East Asia", "South Asia"],
+    "tier": "data-only",
+    "inFlight": null,
+    "perks": ["30 GB high-speed data, then unlimited at 80 Kbps", "Ninety days — for a season, not a trip"],
+    "fairUse": "After the 30 GB, unlimited data continues at 80 Kbps. No calls or SMS are included.",
+    "reasonTemplates": {
+      "fits": "Covers all {countryCount} countries for {days} days",
+      "thin": "For maps and messages, if you call over Wi-Fi",
+      "upsell": "Worth it if the trip stretches, or you fly again this month",
+      "short": "Ends {shortBy} before you fly home"
+    },
+    "tags": ["longest"]
+  }
+]

@@ -1,0 +1,92 @@
+/*
+  `Frame 1321322901` — one 29px cell per day, spread across the column and
+  hung from a common baseline so today's taller pill grows upwards.
+*/
+.strip {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  height: 50px;
+}
+
+.cell {
+  flex: 0 0 auto;
+  width: 29px;
+  height: 30px;
+  border-radius: 5px;
+  background: var(--bg-chip);
+}
+
+/*
+  A spent day is a button. It gets a pointer and a press, and nothing else —
+  the strip has to stay a strip.
+
+  The green is a layer inside rather than this element's own background,
+  because the replay sweeps it on: the cell keeps the empty colour and the
+  fill slides across it. At rest the fill is simply at full width, so a strip
+  that is not replaying looks exactly as it always did.
+*/
+.cellDone {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform var(--dur-press) var(--ease-out);
+}
+
+.cellFill {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-success);
+  transform-origin: left center;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.cellDone:hover .cellFill {
+  background: color-mix(in srgb, var(--bg-success) 82%, var(--p-black));
+}
+
+.cellDone:active { transform: scale(0.94); }
+
+/* The open day deepens to the success green proper, so the one you are reading
+   is obvious without adding a ring the other cells would have to make room
+   for. */
+.cellSelected .cellFill,
+.cellSelected:hover .cellFill {
+  background: var(--status-success);
+}
+
+/* Today is the only cell with a border, and the only one 50px tall. */
+.cellToday {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 50px;
+  border: 1px solid var(--text-secondary);
+  background: var(--p-ink-800);
+  color: var(--text-inverse);
+  overflow: hidden;
+}
+
+/* 05.5 turns today red. The strip is the first thing read on this screen, so
+   the state announces itself there before any meter has to be looked at. */
+.cellTodayLow {
+  border-color: var(--p-red-700);
+  background: var(--p-red-700);
+}
+
+/*
+  Rotated rather than set vertically: the frame turns a normal `caption/12`
+  line on its side, which keeps the letterforms upright-facing.
+
+  The 2px nudge is the line box, not a fudge. A 12/16 line leaves more room
+  under the baseline than over it, so the ink sits above the box's centre —
+  and once the box is turned a quarter turn, "above centre" becomes "right of
+  centre" inside a 29px cell. Shifting back by the difference puts the word on
+  the cell's axis. `translateX` is listed first so it resolves in the cell's
+  coordinates rather than the rotated glyph's.
+*/
+.cellTodayLabel {
+  transform: translateX(-2px) rotate(-90deg);
+  white-space: nowrap;
+}

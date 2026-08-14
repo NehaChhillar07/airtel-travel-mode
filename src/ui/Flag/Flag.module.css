@@ -1,0 +1,19 @@
+.png {
+  display: block;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+/*
+  The baked PNGs are square glyphs with the flag centred. A system emoji is
+  taller than it is wide and sits on a text baseline, so it needs its own
+  centring to line up with the PNGs in the same row.
+*/
+.emoji {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+}

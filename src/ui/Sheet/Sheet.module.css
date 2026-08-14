@@ -1,0 +1,84 @@
+/* Bottom sheet. `borderRadius: 24 24 0 0`, `0 -2px 28.9px rgba(0,0,0,.08)`. */
+
+/* Dim plus blur, so the screen behind reads as out of focus rather than just
+   darker. Rendered by the Sheet itself — vaul only supplies its own overlay in
+   modal mode, and modal mode would lock scrolling on the presenter page
+   outside the phone. */
+.scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 9, 11, 0.45);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.content {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  max-height: 88%;
+  border-radius: var(--r-sheet);
+  background: var(--bg-screen);
+  box-shadow: var(--sh-sheet);
+  outline: none;
+}
+
+.handleWrap {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  padding: 10px 0 6px;
+}
+
+.handle {
+  width: 44px;
+  height: 5px;
+  border-radius: var(--r-pill);
+  background: var(--border-subtle);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex: 0 0 auto;
+  padding: 4px var(--gutter) 12px;
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-pill);
+  background: var(--bg-chip);
+  color: var(--text-secondary);
+}
+
+.close:hover { color: var(--text-primary); }
+
+.body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+.body::-webkit-scrollbar { display: none; }
+
+/* The padding is a variable rather than a value a caller has to out-specify:
+   `footerClassName` lands on this same element, so two `padding` declarations
+   at equal specificity would be settled by stylesheet order — which is import
+   order, which is not something a screen should have to reason about. */
+.foot {
+  flex: 0 0 auto;
+  padding: var(--sheet-foot-pad, 12px var(--gutter) 20px);
+  box-shadow: var(--sh-bar);
+  background: var(--bg-screen);
+}

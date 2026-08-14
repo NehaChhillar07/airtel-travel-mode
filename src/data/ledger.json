@@ -1,0 +1,29 @@
+[
+  {
+    "id": "lg-pack",
+    "kind": "pack",
+    "amount": 2999,
+    "label": "Your pack",
+    "detail": "The pack price, added to your bill on the date shown when you bought it.",
+    "atHoursAfterLanding": 0,
+    "action": null
+  },
+  {
+    "id": "lg-divert",
+    "kind": "voicemail-divert",
+    "amount": 35,
+    "label": "Voicemail divert · 3 calls forwarded",
+    "detail": "Calls you did not answer were forwarded to your voicemail box in India. Every hop is billed as an outgoing international call, even though you never picked up. Turning the divert off stops it.",
+    "atHoursAfterLanding": 6,
+    "action": { "label": "Stop", "kind": "stop-divert" }
+  },
+  {
+    "id": "lg-declined",
+    "kind": "declined-call",
+    "amount": 6,
+    "label": "A call you declined, it still connects",
+    "detail": "Declining a call still routes it onward to voicemail, and that counts as a connected minute. It is not a mistake on your bill — it is how the network works.",
+    "atHoursAfterLanding": 19,
+    "action": { "label": "Why", "kind": "explain" }
+  }
+]

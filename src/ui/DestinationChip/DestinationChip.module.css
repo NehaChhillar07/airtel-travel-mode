@@ -1,0 +1,191 @@
+/**
+ * `Destination` — the Figma COMPONENT_SET, in code.
+ *
+ *   State    = Default | Active
+ *   Property = Chip | Row | Block
+ *
+ * All six combinations were drawn. None of them were ever wired: the scene
+ * graph replayed whichever instance the designer had placed, so a chip could
+ * not be selected. This is the component that fixes that.
+ *
+ * The Active treatment is a halo, built from two rings on two elements exactly
+ * as Figma builds it — a 3px white inset ring on the fill, and a 1px grey ring
+ * outside it. The gap between them is what makes selection read at a glance.
+ * Selected chips are also 6px larger, which is why the row animates.
+ */
+
+.chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  /* Figma says 35px; at 47px tall that clamps to a pill, which is what the
+     export actually renders. Naming it as a pill avoids the confusion. */
+  border-radius: var(--r-pill);
+  padding: 12px;
+  isolation: isolate;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* The fill and its inset ring — Figma's `Background+Border` node. */
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--grad-chip);
+}
+
+.chip[data-state='active'] {
+  padding: 15px;
+  box-shadow: var(--ring-selected-outer);
+}
+
+.chip[data-state='active'] .bg {
+  background: var(--bg-card);
+  box-shadow: var(--ring-selected-inner);
+}
+
+.chip:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* -------------------------------------------------------------- Compact
+   The trip band's chip, `Destination` at 114x37 in the file. Same two rings,
+   drawn tight: 3px of white ring plus 4px of padding around a 23px flag is
+   exactly the 37px the frame is. */
+
+.chip[data-density='compact'] {
+  padding: 7px 11px;
+  border-radius: var(--r-field);
+}
+
+.chip[data-density='compact'] .bg {
+  background: var(--bg-card);
+  box-shadow: var(--ring-selected-inner);
+}
+
+.chip[data-density='compact'][data-state='active'] {
+  padding: 7px 11px;
+  box-shadow: var(--ring-selected-outer);
+}
+
+.label {
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------- Row
+   Full-width list row: flag, name, price, trailing action. Used by the
+   destination search results. */
+
+.chip[data-property='row'] {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.chip[data-property='row'] .bg {
+  border-radius: 0;
+  background: var(--bg-raised);
+  box-shadow: none;
+}
+
+.chip[data-property='row'][data-state='active'] .bg {
+  background: var(--bg-card);
+  box-shadow: none;
+}
+
+.rowText {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  text-align: left;
+}
+
+/* The name is the row. When "United Arab Emirates" arrives as the `via` note
+   and the price sits between them, something has to give — and it must not be
+   the name, which crushed to "U." while the note it matched stayed whole. */
+.rowName {
+  flex: 0 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rowPrice {
+  flex: 0 0 auto;
+}
+
+.rowAction {
+  flex: 0 0 auto;
+  color: var(--text-link);
+}
+
+/* The lopsided shrink factor is the point: when the row is too narrow, the
+   match note gives up its width first and the country name keeps all of its
+   own. Equal factors shrink both in proportion, which is how "United Arab
+   Emirates" ended up sitting next to a country called "U.". */
+.rowVia {
+  flex: 0 999 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ----------------------------------------------------------------- Block
+   Square tile: flag above label. Used on the pack detail sheet to show
+   covered countries. */
+
+.chip[data-property='block'] {
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  width: 97px;
+  height: 91px;
+  padding: 12px 8px;
+  border-radius: var(--r-card);
+  text-align: center;
+}
+
+.chip[data-property='block'][data-state='active'] {
+  width: 103px;
+  height: 97px;
+  padding: 15px 8px;
+}
+
+.chip[data-property='block'] .bg {
+  border-radius: var(--r-card);
+}
+
+.blockLabel {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* A tick that appears on the selected state. Drawn, not faded, so it reads as
+   an action completing rather than an element appearing. */
+.tick {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--r-pill);
+  background: var(--status-success);
+  color: var(--text-inverse);
+  box-shadow: 0 0 0 2px var(--bg-screen);
+}

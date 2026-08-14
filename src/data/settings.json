@@ -1,0 +1,13 @@
+{
+  "today": "2026-08-20",
+  "msisdn": "9990009991",
+  "billingCycleDay": 2,
+  "billDueOffsetDays": 10,
+  "gstRate": 0.1734,
+  "currency": "INR",
+  "locale": "en-IN",
+  "standardRoamingPerDay": 450,
+  "maxTripDays": 90,
+  "defaultDepartOffsetDays": 5,
+  "defaultTripDays": 9
+}

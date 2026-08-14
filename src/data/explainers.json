@@ -1,0 +1,42 @@
+[
+  {
+    "id": "high-speed",
+    "group": "actions",
+    "title": "Add high-speed data",
+    "body": "Only needed after {fup} GB, once your speed drops. Plenty left for now.",
+    "trailing": "chevron",
+    "icon": "speed"
+  },
+  {
+    "id": "more-days",
+    "group": "actions",
+    "title": "Add more days",
+    "body": "A second pack stacks on top, so you keep the days you already have.",
+    "trailing": "chevron",
+    "icon": "calendar"
+  },
+  {
+    "id": "auto-top-up",
+    "group": "actions",
+    "title": "Add another pack if this one runs out",
+    "body": "If your {validity} days end while you are still away, we add another {price} pack to your bill instead of slowing you down.",
+    "trailing": "switch",
+    "icon": "plus"
+  },
+  {
+    "id": "drain-voicemail",
+    "group": "drain",
+    "title": "Turn voicemail off",
+    "body": "Unanswered calls divert to voicemail and still use your minutes. We'll show the cost here as soon as there is one.",
+    "trailing": "chevron",
+    "icon": "voicemail"
+  },
+  {
+    "id": "drain-roaming",
+    "group": "drain",
+    "title": "Turn off roaming",
+    "body": "Stops calls, texts and data outside India straight away. Turn it back on whenever you like.",
+    "trailing": "chevron",
+    "icon": "globe"
+  }
+]

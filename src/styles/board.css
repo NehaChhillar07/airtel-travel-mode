@@ -1,0 +1,46 @@
+/**
+ * Departure board.
+ *
+ * Its own typographic world, for the same reason ios.css has one: this is a
+ * diegetic object, not product UI. A Solari board is set in a condensed
+ * grotesk and always in caps — Poppins would read as an app pretending to be
+ * a board rather than a board.
+ *
+ * Barlow Condensed 500/600. Scoped to `.board-*` so it cannot leak: if one of
+ * these classes turns up on a screen, that is the bug.
+ */
+
+:root {
+  --font-board: 'Barlow Condensed', 'Oswald', 'Arial Narrow', sans-serif;
+
+  /* The board is a physical object with its own palette — near-black cards,
+     bone-white characters. Not the Airtel surfaces. */
+  --board-case: #14171b;
+  --board-card: #22272e;
+  --board-card-lo: #191d23;
+  --board-char: #f2f4f3;
+  --board-char-dim: #8d959f;
+  /* The hairline where the two halves of a real card meet. */
+  --board-seam: rgba(0, 0, 0, 0.55);
+  --board-edge: rgba(255, 255, 255, 0.07);
+}
+
+.board-title {
+  font-family: var(--font-board);
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 1;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  color: var(--board-char);
+}
+
+.board-sub {
+  font-family: var(--font-board);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--board-char-dim);
+}

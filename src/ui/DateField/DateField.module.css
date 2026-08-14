@@ -1,0 +1,69 @@
+/**
+ * "Leaving" / "Coming back" — 166.5x68, r14.
+ *
+ * SOURCE_ISSUES §3.3: in the Figma these have no interaction at all. The
+ * calendar exists as node 148:5670 but "sits loose on the 04 board, not inside
+ * any frame, so it never appears in an export… so dates are unclickable."
+ * This is a button that opens a real range picker.
+ */
+
+.field {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+  height: 68px;
+  padding: 0 16px;
+  border-radius: var(--r-card);
+  background: var(--grad-chip);
+  box-shadow: var(--ring-subtle);
+  text-align: left;
+  transition: box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.field[data-open='true'] {
+  box-shadow: var(--ring-focus);
+}
+
+.field[data-invalid='true'] {
+  box-shadow: var(--ring-critical);
+}
+
+.field:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.label {
+  display: block;
+}
+
+.value {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.placeholder {
+  color: var(--text-secondary);
+}
+
+/* A one-shot tint when a date is written into the field, so the write is
+   visible even when the calendar covers the field it filled. */
+@keyframes fieldFlash {
+  from { background-color: var(--bg-info); }
+  to { background-color: transparent; }
+}
+
+.flash {
+  animation: fieldFlash 600ms var(--ease-out);
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}

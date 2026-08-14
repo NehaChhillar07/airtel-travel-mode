@@ -1,0 +1,118 @@
+/**
+ * 05.4 Trip dashboard, and 05.5 with `isLowBalance()` true.
+ *
+ * The action rows, the stop-the-drain card and the help card are shared with
+ * 05.2 and live in `src/patterns/TripActions`. What is left here is the spend
+ * card and the prototype controls.
+ */
+
+/* `Frame 1321322918` — the three blocks below the spend card, 20px apart. */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 36px;
+}
+
+/* ------------------------------------------------------------- spend card
+   `Frame 1321322931` — 20px of gutter around a 353px card. */
+
+.spendWrap {
+  padding: 0 var(--gutter);
+}
+
+/*
+  `Frame 1321322930` — #F8F9FE on a lavender hairline, 16px radius, 16px
+  padded, 12px between the block above and each ledger line below.
+*/
+.spend {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: var(--r-field);
+  background: var(--bg-card);
+  border: 1px solid var(--p-lavender-050);
+}
+
+/* `Frame 1321322927` — the overline over the figure block. */
+.spendHead {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* `Frame 1321322926` — total, caveat, breakdown. */
+.spendFigures {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.spendCaption { color: var(--text-secondary); }
+
+/* `Line 9` / `Line 10` — #F0F3F8, lighter than the hairline the rest of the
+   file separates with, because these split rows inside one card. */
+.ledgerRule {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: var(--bg-chip);
+}
+
+/* `Frame 1321322928` — the charge against what you can do about it. */
+.ledgerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  overflow: hidden;
+}
+
+.ledgerText {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--text-primary);
+}
+
+.ledgerAction {
+  flex: 0 0 auto;
+  color: var(--text-link);
+}
+
+.stopped {
+  flex: 0 0 auto;
+  color: var(--status-success);
+}
+
+/* ------------------------------------------------------------------ sheet */
+
+.whyBody {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 var(--gutter) 20px;
+}
+
+/* A visible way to move the trip forward without waiting nine days. It is a
+   prototype control, so it is labelled as one rather than dressed up as UI. */
+.sim {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 var(--gutter);
+  padding: 12px;
+  border-radius: var(--r-card);
+  background: repeating-linear-gradient(
+    45deg,
+    var(--bg-chip),
+    var(--bg-chip) 8px,
+    transparent 8px,
+    transparent 16px
+  );
+}
+
+.simLabel {
+  width: 100%;
+}

@@ -1,0 +1,203 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  /* Sections are far enough apart to read as separate blocks, not one list. */
+  gap: 36px;
+  /* Room for the floating bottom nav to sit over: 24 + 72 + a gap. */
+  padding: 24px var(--gutter) 120px;
+}
+
+/* ------------------------------------------------------------- services
+   Each service is its own pill card with a round icon and a chevron, not a
+   row inside a shared container. */
+
+.services {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.serviceRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 28px;
+  /* The pill is not flat white — it carries the chip gradient, white at the
+     top settling to #f7f7f7 at the bottom, which is what the file draws. */
+  background: var(--grad-chip);
+  box-shadow: var(--ring-subtle);
+  text-align: left;
+}
+
+.serviceIcon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r-pill);
+  background: var(--bg-chip);
+  /*
+    The file's service glyphs are raster illustrations — an isometric 5G SIM and
+    a plane in a filled disc — that were not part of the asset export. Both are
+    drawn in #d73737, which is `--brand` exactly, so the lucide stand-ins carry
+    that red rather than defaulting to ink.
+  */
+  color: var(--brand);
+}
+
+.serviceIconImg {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.serviceText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.serviceSub {
+  display: block;
+}
+
+.chev {
+  flex: 0 0 auto;
+  /* #cdd3dd in the file — the affordance, not a second piece of text. */
+  color: var(--border-subtle);
+}
+
+/* ------------------------------------------------------------- products */
+
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+/* Label above the image, which is how the file stacks them. */
+.product {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  height: 124px;
+  padding: 12px 8px;
+  border-radius: var(--r-card);
+  /* Same chip gradient as the service pills, over the lighter hairline — the
+     product grid sits back from the services, it does not compete with them. */
+  background: var(--grad-chip);
+  box-shadow: inset 0 0 0 1px var(--border-hairline);
+  text-align: center;
+}
+
+.productLabel {
+  flex: 0 0 auto;
+}
+
+.productImg {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  object-fit: contain;
+}
+
+/* ----------------------------------------------------------- bottom nav
+   A floating glass pill that sits over the content rather than a bar pinned to
+   the frame edge. Frame 13 in the file is 393x106 with 10/26/24 padding, so the
+   bar is 341 wide, 72 tall, and clears the bottom of the frame by 24. */
+
+.bottomNav {
+  position: absolute;
+  bottom: 24px;
+  left: 26px;
+  right: 26px;
+  z-index: var(--z-sticky);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 72px;
+  padding: 0 6px;
+  /* A real 2px border, not an inset ring — it is inside the 341 and the tabs
+     lay out against it. */
+  border: 2px solid var(--bg-raised);
+  border-radius: 66px;
+  background: var(--glass-navbar);
+  box-shadow: var(--sh-navbar);
+  backdrop-filter: var(--blur-navbar);
+}
+
+.navItem {
+  display: flex;
+  /* The three inactive tabs share what the 94px active pill leaves. */
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  color: var(--text-nav);
+}
+
+/* The tab you are on is a fixed-width pill, still stacked — it does not turn
+   into a row the way a chip would. */
+.navItem[data-active='true'] {
+  flex: 0 0 auto;
+  width: 94px;
+  height: 62px;
+  padding: 6px 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 49px;
+  background: var(--glass-navbar-active);
+  color: var(--brand);
+}
+
+.navGlyph {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+}
+
+/* Finance is the only tab drawn as a filled disc with the glyph knocked out of
+   it in white, rather than as a glyph in the metal gradient. */
+.navDisc {
+  border-radius: var(--r-pill);
+  background: var(--grad-metal);
+  color: var(--text-inverse);
+}
+
+.navLogo {
+  color: var(--brand-logo);
+}
+
+/* --------------------------------------------------------- live trip card */
+
+.tripCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tripHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.flags {
+  display: inline-flex;
+  gap: 3px;
+}

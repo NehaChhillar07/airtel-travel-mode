@@ -1,0 +1,141 @@
+/**
+ * `Frame 1321322873` — 393x126, the leg you just flew.
+ *
+ * Everything on it is absolutely positioned the way the frame draws it,
+ * because the arc has to meet both endpoints exactly. The box is a fixed size
+ * and nothing inside it is in flow, so the motion in RouteLeg.tsx cannot move
+ * anything on the screens that mount it.
+ */
+
+.route {
+  position: relative;
+  width: 393px;
+  height: 126px;
+  flex: 0 0 auto;
+  /* The badge rides to the very end of the arc and the flag overhangs the
+     right edge; neither should be able to widen the screen. */
+  overflow: hidden;
+}
+
+/*
+  `Vector 1` — drawn at full frame size rather than in a 246x29 box of its own,
+  so the path string here is the same one the badge travels. Two coordinate
+  systems that agreed by hand is exactly what let the disc sit beside the curve
+  instead of on it.
+*/
+.arc {
+  position: absolute;
+  inset: 0;
+  width: 393px;
+  height: 126px;
+}
+
+.arcPath {
+  fill: none;
+  stroke: var(--border-subtle);
+  stroke-width: 2;
+  stroke-dasharray: 6 6;
+  stroke-linecap: round;
+}
+
+/* `delhi` — left 42, top 18. Lowercase in the file, and left that way. */
+.from {
+  position: absolute;
+  left: 42px;
+  top: 18px;
+  color: var(--text-secondary);
+}
+
+/* `Singapore` — right-aligned to the flag rather than pinned at left 280, so
+   a longer country name grows leftwards instead of off the frame. */
+.to {
+  position: absolute;
+  right: 40px;
+  top: 18px;
+  color: var(--text-primary);
+}
+
+/* `Frame` — the home pin, 37x37 at left 40, top 63. Red while the phone is
+   registered, and the same grey as the arc while it is not. */
+.home {
+  position: absolute;
+  left: 40px;
+  top: 63px;
+  display: grid;
+  place-items: center;
+  width: 37px;
+  height: 37px;
+  border-radius: 12px 12px 12px 4px;
+  background: var(--brand);
+  color: var(--text-inverse);
+}
+
+.homeOff {
+  background: var(--border-subtle);
+  color: var(--bg-screen);
+}
+
+/* `Warstwa_1` — the destination flag. A wrapper carries the pop so the scale
+   lands on a box of its own and cannot fight the Flag component's sizing. */
+.flagWrap {
+  position: absolute;
+  left: 299px;
+  top: 52px;
+  display: block;
+}
+
+.flag {
+  display: block;
+  width: 60px;
+  height: 60px;
+}
+
+.flagOff {
+  width: 52px;
+  height: 52px;
+  filter: grayscale(1) opacity(0.55);
+}
+
+/*
+  `Frame 1321322872` — the 24px black disc. Connected, it is the plane flying
+  the length of the arc; not connected, a question mark stalled partway along
+  it.
+
+  It is placed entirely by `offset-path` now, which is why there is no `left`
+  or `top`: `offset-anchor` puts the disc's own centre on the curve. The disc
+  stays upright while it travels, so only the glyph inside rotates.
+*/
+.badge {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--r-pill);
+  background: var(--p-black);
+  color: var(--text-inverse);
+  offset-anchor: 50% 50%;
+  offset-rotate: 0deg;
+}
+
+.badgeGlyph {
+  display: grid;
+  place-items: center;
+  line-height: 1;
+}
+
+/*
+  No `offset-path` support means no travel. The badge falls back to the
+  position the frame draws it at, which is the resting end of each animation.
+*/
+@supports not (offset-path: path('M0 0 L1 1')) {
+  .badge {
+    left: 290px;
+    top: 56px;
+  }
+
+  .badgeStalled {
+    left: 185px;
+    top: 32px;
+  }
+}

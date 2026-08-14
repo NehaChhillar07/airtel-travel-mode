@@ -1,0 +1,173 @@
+/**
+ * `Pack Card` — the Figma COMPONENT_SET (State=Default | Selected).
+ * 354 wide, r24, `linear-gradient(180deg,#ffffff,#f7f7f7)`, 1px inset ring.
+ * The Recommended badge is 110x28, r8, and hangs at top:-14.
+ */
+
+.card {
+  position: relative;
+  width: 100%;
+  border-radius: var(--r-xl);
+  background: var(--grad-chip);
+  box-shadow: var(--ring-subtle);
+  text-align: left;
+  transition: box-shadow var(--dur-base) var(--ease-out);
+}
+
+.card[data-state='selected'] {
+  box-shadow: inset 0 0 0 2px var(--action-primary-fill), var(--sh-pop);
+}
+
+/* Nested inside another panel, so it brings only its content. */
+.bare {
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.bare .inner { padding: 0; }
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 18px;
+  /* A <button> element defaults to text-align: center, which quietly centres
+     every line inside the card. */
+  text-align: left;
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Sits tight against the figure, so "₹2,999 excl GST" reads as one unit and
+   the validity that follows reads as a separate fact. */
+.excl { margin-right: 4px; }
+
+.contents {
+  display: block;
+  margin-top: 4px;
+}
+
+.chevron {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin: -4px -4px 0 0;
+  border-radius: var(--r-pill);
+  color: var(--text-secondary);
+}
+
+.chevron:hover { background: var(--bg-chip); }
+
+.reason {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.reasonIcon {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  color: var(--status-success);
+}
+
+.reasonIconMuted { color: var(--text-secondary); }
+
+.badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+/*
+  One slow sweep on mount, never looping — a loop would read as a live
+  indicator rather than a one-off flourish.
+
+  It lives on its own layer rather than on `.card`, because the clip the sweep
+  needs would also cut off the Recommended badge, which deliberately hangs
+  14px above the card's top edge.
+*/
+.sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 80%
+  );
+  transform: translateX(-100%);
+  animation: sweep 1.1s var(--ease-out) 0.35s 1 forwards;
+}
+
+@keyframes sweep {
+  to { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheen { display: none; }
+}
+
+/* ------------------------------------------------------------- expansion */
+
+.details {
+  overflow: hidden;
+}
+
+.detailsInner {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 18px 18px;
+}
+
+.perk {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.perkIcon {
+  flex: 0 0 auto;
+  margin-top: 3px;
+  color: var(--status-success);
+}
+
+.missing {
+  display: block;
+}
+
+.footRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 4px;
+}

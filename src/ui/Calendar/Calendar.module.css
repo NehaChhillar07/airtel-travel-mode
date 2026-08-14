@@ -1,0 +1,218 @@
+/**
+ * Range calendar, styled to Figma node `148:5670`.
+ *
+ * That node is the one SOURCE_ISSUES §3.3 calls out: it "sits loose on the 04
+ * board, not inside any frame, so it never appears in an export… so dates are
+ * unclickable." It was designed and then stranded. This is it, wired up.
+ *
+ * The single-selected-day treatment is drawn (black rounded square, white
+ * text). The range treatment is not — the source only ever shows one selected
+ * day — so the middle and endpoint states are invented from the same tokens.
+ */
+
+.wrap {
+  padding: 0 var(--gutter) 8px;
+}
+
+.rdp {
+  --rdp-cell: 40px;
+  --rdp-gap: 2px;
+  width: 100%;
+}
+
+/* ------------------------------------------------------------------- nav */
+
+/*
+  The nav is absolutely positioned so the two chevrons flank the month pill,
+  which is centred in normal flow. react-day-picker renders the caption after
+  the nav, so without an explicit z-index the caption paints on top and
+  swallows every click on the arrows — the month becomes unchangeable.
+*/
+.nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  pointer-events: none;
+}
+
+.nav > * {
+  pointer-events: auto;
+}
+
+.navBtn {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--r-pill);
+  color: var(--text-primary);
+}
+
+.navBtn:hover:not(:disabled) { background: var(--bg-chip); }
+.navBtn:disabled { opacity: 0.25; cursor: default; }
+
+.monthCaption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  margin-bottom: 4px;
+  /* A label, never a target. Lets taps near the pill reach the arrows. */
+  pointer-events: none;
+}
+
+.captionLabel {
+  padding: 6px 16px;
+  border-radius: var(--r-md);
+  background: var(--bg-raised);
+  box-shadow: var(--sh-card);
+}
+
+/* ------------------------------------------------------------------ grid */
+
+.monthGrid {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.weekdays { }
+
+.weekday {
+  width: var(--rdp-cell);
+  height: 32px;
+  font: 400 13px/16px var(--font-ui);
+  color: var(--text-secondary);
+  font-weight: 400;
+  text-align: center;
+}
+
+.week { }
+
+/*
+  The day cell is the range track. Padding-free so consecutive selected days
+  form an unbroken bar, and the endpoints round only on their outer edge.
+*/
+.day {
+  position: relative;
+  width: var(--rdp-cell);
+  height: var(--rdp-cell);
+  text-align: center;
+  padding: 0;
+}
+
+.dayButton {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--r-md);
+  font: 400 15px/20px var(--font-ui);
+  color: var(--text-primary);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.dayButton:hover:not(:disabled) { background: var(--bg-chip); }
+
+.outside .dayButton { color: var(--text-secondary); opacity: 0.45; }
+.disabled .dayButton { color: var(--text-secondary); opacity: 0.3; cursor: default; }
+.disabled .dayButton:hover { background: none; }
+
+.today .dayButton {
+  font-weight: 700;
+}
+.today::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: var(--r-pill);
+  background: var(--brand);
+}
+
+/* ------------------------------------------------------------ selection */
+
+/* The connecting band behind the middle of a range. */
+.rangeMiddle::before {
+  content: '';
+  position: absolute;
+  inset: 4px 0;
+  background: var(--bg-chip);
+}
+
+.rangeMiddle .dayButton {
+  color: var(--text-primary);
+}
+
+.rangeStart::before,
+.rangeEnd::before {
+  content: '';
+  position: absolute;
+  inset: 4px 0;
+  background: var(--bg-chip);
+}
+/* Only the outer half of an endpoint is banded, so the range reads as
+   starting at the black square rather than running past it. */
+.rangeStart::before { left: 50%; }
+.rangeEnd::before { right: 50%; }
+
+/* A range of one day needs no band at all. */
+.rangeStart.rangeEnd::before { display: none; }
+
+.selected .dayButton {
+  background: var(--action-primary-fill);
+  color: var(--text-inverse);
+  font-weight: 500;
+}
+.selected .dayButton:hover { background: var(--action-primary-fill); }
+
+/*
+  Must come after `.selected`. react-day-picker marks every day in the range as
+  selected, endpoints and middle alike, so without this the middle days inherit
+  the endpoint's white-on-black and turn invisible against the band.
+*/
+.rangeMiddle .dayButton,
+.rangeMiddle .dayButton:hover {
+  background: transparent;
+  color: var(--text-primary);
+  font-weight: 400;
+}
+
+/* ----------------------------------------------------------------- footer */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.hint {
+  display: block;
+}
+
+/* `.months` is the containing block for the absolutely-positioned nav.
+   `.month` deliberately stays unpositioned: react-day-picker renders it as a
+   sibling *after* the nav, so making it a positioned element would paint it
+   over the chevrons and make the month impossible to change. */
+.months { position: relative; }

@@ -1,0 +1,552 @@
+{
+ "screens": [
+  {
+   "id": "148:5669",
+   "name": "01 The problem",
+   "width": 393,
+   "height": 852,
+   "scroll": {
+    "overflow": null,
+    "fixed": []
+   }
+  },
+  {
+   "id": "31:1065",
+   "name": "04.1 Trip creation",
+   "width": 393,
+   "height": 852,
+   "scroll": {
+    "overflow": null,
+    "fixed": [
+     {
+      "id": "45:2520",
+      "name": "Frame 32",
+      "top": 0,
+      "height": 215,
+      "pin": "top",
+      "bottom": 637
+     },
+     {
+      "id": "45:2279",
+      "name": "Frame 30",
+      "top": 712,
+      "height": 140,
+      "pin": "bottom",
+      "bottom": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "41:2123",
+   "name": "04.2 Destination and dates",
+   "width": 393,
+   "height": 1031,
+   "scroll": {
+    "overflow": "VERTICAL_SCROLLING",
+    "fixed": [
+     {
+      "id": "45:2519",
+      "name": "Frame 32",
+      "top": 0,
+      "height": 126,
+      "pin": "top",
+      "bottom": 905
+     },
+     {
+      "id": "41:2126",
+      "name": "Header",
+      "top": 126,
+      "height": 89,
+      "pin": "top",
+      "bottom": 816
+     },
+     {
+      "id": "45:2336",
+      "name": "Frame 31",
+      "top": 891,
+      "height": 140,
+      "pin": "bottom",
+      "bottom": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "45:2345",
+   "name": "04.3 Trip details filled",
+   "width": 393,
+   "height": 852,
+   "scroll": {
+    "overflow": null,
+    "fixed": [
+     {
+      "id": "45:2521",
+      "name": "Frame 32",
+      "top": 0,
+      "height": 215,
+      "pin": "top",
+      "bottom": 637
+     },
+     {
+      "id": "45:2422",
+      "name": "Frame 31",
+      "top": 712,
+      "height": 140,
+      "pin": "bottom",
+      "bottom": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "48:2525",
+   "name": "04.4 Pack selection",
+   "width": 393,
+   "height": 1224,
+   "scroll": {
+    "overflow": "VERTICAL_SCROLLING",
+    "fixed": [
+     {
+      "id": "48:2552",
+      "name": "Frame 32",
+      "top": 0,
+      "height": 98,
+      "pin": "top",
+      "bottom": 1126
+     },
+     {
+      "id": "61:3369",
+      "name": "Frame 31",
+      "top": 1052,
+      "height": 172,
+      "pin": "bottom",
+      "bottom": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "65:3738",
+   "name": "04.5 Pack detail",
+   "width": 393,
+   "height": 946,
+   "scroll": {
+    "overflow": null,
+    "fixed": [
+     {
+      "id": "65:3782",
+      "name": "Frame 32",
+      "top": 0,
+      "height": 98,
+      "pin": "top",
+      "bottom": 848
+     }
+    ]
+   }
+  },
+  {
+   "id": "70:3896",
+   "name": "04.6 Review and billing",
+   "width": 393,
+   "height": 852,
+   "scroll": {
+    "overflow": null,
+    "fixed": [
+     {
+      "id": "70:4026",
+      "name": "Frame 32",
+      "top": 0,
+      "height": 116,
+      "pin": "top",
+      "bottom": 736
+     }
+    ]
+   }
+  },
+  {
+   "id": "76:4215",
+   "name": "04.7 Confirmation",
+   "width": 393,
+   "height": 1449,
+   "scroll": {
+    "overflow": null,
+    "fixed": [
+     {
+      "id": "76:4270",
+      "name": "Frame 32",
+      "top": 0,
+      "height": 215,
+      "pin": "top",
+      "bottom": 1234
+     }
+    ]
+   }
+  },
+  {
+   "id": "101:710",
+   "name": "05.1 Setup checklist",
+   "width": 393,
+   "height": 1162,
+   "scroll": {
+    "overflow": "VERTICAL_SCROLLING",
+    "fixed": [
+     {
+      "id": "101:802",
+      "name": "Frame 32",
+      "top": 0,
+      "height": 98,
+      "pin": "top",
+      "bottom": 1064
+     },
+     {
+      "id": "104:1016",
+      "name": "Frame 31",
+      "top": 1054,
+      "height": 108,
+      "pin": "bottom",
+      "bottom": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "113:1691",
+   "name": "05.2 Connected confirmation",
+   "width": 393,
+   "height": 2083,
+   "scroll": {
+    "overflow": null,
+    "fixed": [
+     {
+      "id": "113:1783",
+      "name": "Frame 32",
+      "top": 0,
+      "height": 215,
+      "pin": "top",
+      "bottom": 1868
+     }
+    ]
+   }
+  },
+  {
+   "id": "120:2533",
+   "name": "05.3 Not connected troubleshooting",
+   "width": 393,
+   "height": 1769,
+   "scroll": {
+    "overflow": "VERTICAL_SCROLLING",
+    "fixed": [
+     {
+      "id": "120:2628",
+      "name": "Frame 32",
+      "top": 0,
+      "height": 215,
+      "pin": "top",
+      "bottom": 1554
+     },
+     {
+      "id": "120:2830",
+      "name": "Frame 31",
+      "top": 1611,
+      "height": 158,
+      "pin": "bottom",
+      "bottom": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "120:2960",
+   "name": "05.4 Trip dashboard",
+   "width": 393,
+   "height": 2140,
+   "scroll": {
+    "overflow": "VERTICAL_SCROLLING",
+    "fixed": [
+     {
+      "id": "120:3045",
+      "name": "Frame 32",
+      "top": 0,
+      "height": 215,
+      "pin": "top",
+      "bottom": 1925
+     }
+    ]
+   }
+  },
+  {
+   "id": "134:3925",
+   "name": "05.5 Trip dashboard low balance",
+   "width": 393,
+   "height": 2198,
+   "scroll": {
+    "overflow": "VERTICAL_SCROLLING",
+    "fixed": [
+     {
+      "id": "134:4070",
+      "name": "Frame 32",
+      "top": 0,
+      "height": 215,
+      "pin": "top",
+      "bottom": 1983
+     }
+    ]
+   }
+  },
+  {
+   "id": "137:4728",
+   "name": "05.6 Pack ended",
+   "width": 393,
+   "height": 875,
+   "scroll": {
+    "overflow": "VERTICAL_SCROLLING",
+    "fixed": [
+     {
+      "id": "137:4873",
+      "name": "Frame 32",
+      "top": 0,
+      "height": 215,
+      "pin": "top",
+      "bottom": 660
+     }
+    ]
+   }
+  },
+  {
+   "id": "137:5595",
+   "name": "05.7 Notification pack ended",
+   "width": 393,
+   "height": 847,
+   "scroll": {
+    "overflow": "VERTICAL_SCROLLING",
+    "fixed": []
+   }
+  },
+  {
+   "id": "137:5569",
+   "name": "05.8 Notification pack ending soon",
+   "width": 393,
+   "height": 847,
+   "scroll": {
+    "overflow": "VERTICAL_SCROLLING",
+    "fixed": []
+   }
+  },
+  {
+   "id": "137:5540",
+   "name": "05.9 Notification usage warnings",
+   "width": 393,
+   "height": 847,
+   "scroll": {
+    "overflow": "VERTICAL_SCROLLING",
+    "fixed": []
+   }
+  },
+  {
+   "id": "137:5403",
+   "name": "05.10 Notification missed call charges",
+   "width": 393,
+   "height": 847,
+   "scroll": {
+    "overflow": "VERTICAL_SCROLLING",
+    "fixed": []
+   }
+  },
+  {
+   "id": "113:1890",
+   "name": "05.11 Notification not connected",
+   "width": 393,
+   "height": 847,
+   "scroll": {
+    "overflow": "VERTICAL_SCROLLING",
+    "fixed": []
+   }
+  },
+  {
+   "id": "114:1908",
+   "name": "05.12 Notification live activity widget",
+   "width": 393,
+   "height": 847,
+   "scroll": {
+    "overflow": "VERTICAL_SCROLLING",
+    "fixed": []
+   }
+  },
+  {
+   "id": "105:1050",
+   "name": "05.13 Notification connected",
+   "width": 393,
+   "height": 847,
+   "scroll": {
+    "overflow": "VERTICAL_SCROLLING",
+    "fixed": []
+   }
+  }
+ ],
+ "approximations": [
+  {
+   "screen": "01 The problem",
+   "node": "145:1248",
+   "name": "Container",
+   "kind": "glass"
+  },
+  {
+   "screen": "04.7 Confirmation",
+   "node": "100:686",
+   "name": "Frame 103",
+   "kind": "progressive-backdrop-blur"
+  },
+  {
+   "screen": "04.7 Confirmation",
+   "node": "100:686",
+   "name": "Frame 103",
+   "kind": "glass"
+  },
+  {
+   "screen": "05.2 Connected confirmation",
+   "node": "137:5313",
+   "name": "Frame 40",
+   "kind": "glass"
+  },
+  {
+   "screen": "05.3 Not connected troubleshooting",
+   "node": "137:5418",
+   "name": "Frame 40",
+   "kind": "glass"
+  },
+  {
+   "screen": "05.4 Trip dashboard",
+   "node": "137:5448",
+   "name": "Frame 40",
+   "kind": "glass"
+  },
+  {
+   "screen": "05.5 Trip dashboard low balance",
+   "node": "137:5478",
+   "name": "Frame 40",
+   "kind": "glass"
+  },
+  {
+   "screen": "05.6 Pack ended",
+   "node": "137:5508",
+   "name": "Frame 40",
+   "kind": "glass"
+  },
+  {
+   "screen": "05.7 Notification pack ended",
+   "node": "137:5597",
+   "name": "Notification",
+   "kind": "progressive-backdrop-blur"
+  },
+  {
+   "screen": "05.7 Notification pack ended",
+   "node": "137:5608",
+   "name": "Frame 1321322860",
+   "kind": "texture"
+  },
+  {
+   "screen": "05.7 Notification pack ended",
+   "node": "137:5609",
+   "name": "Notification",
+   "kind": "progressive-backdrop-blur"
+  },
+  {
+   "screen": "05.7 Notification pack ended",
+   "node": "137:5620",
+   "name": "Frame 1321322860",
+   "kind": "texture"
+  },
+  {
+   "screen": "05.8 Notification pack ending soon",
+   "node": "137:5571",
+   "name": "Notification",
+   "kind": "progressive-backdrop-blur"
+  },
+  {
+   "screen": "05.8 Notification pack ending soon",
+   "node": "137:5582",
+   "name": "Frame 1321322860",
+   "kind": "texture"
+  },
+  {
+   "screen": "05.9 Notification usage warnings",
+   "node": "137:5542",
+   "name": "Notification",
+   "kind": "progressive-backdrop-blur"
+  },
+  {
+   "screen": "05.9 Notification usage warnings",
+   "node": "137:5553",
+   "name": "Frame 1321322860",
+   "kind": "texture"
+  },
+  {
+   "screen": "05.9 Notification usage warnings",
+   "node": "137:5557",
+   "name": "Notification",
+   "kind": "progressive-backdrop-blur"
+  },
+  {
+   "screen": "05.9 Notification usage warnings",
+   "node": "137:5568",
+   "name": "Frame 1321322860",
+   "kind": "texture"
+  },
+  {
+   "screen": "05.10 Notification missed call charges",
+   "node": "137:5405",
+   "name": "Notification",
+   "kind": "progressive-backdrop-blur"
+  },
+  {
+   "screen": "05.10 Notification missed call charges",
+   "node": "137:5416",
+   "name": "Frame 1321322860",
+   "kind": "texture"
+  },
+  {
+   "screen": "05.11 Notification not connected",
+   "node": "113:1892",
+   "name": "Notification",
+   "kind": "progressive-backdrop-blur"
+  },
+  {
+   "screen": "05.11 Notification not connected",
+   "node": "113:1903",
+   "name": "Frame 1321322860",
+   "kind": "texture"
+  },
+  {
+   "screen": "05.12 Notification live activity widget",
+   "node": "114:1910",
+   "name": "Notification",
+   "kind": "progressive-backdrop-blur"
+  },
+  {
+   "screen": "05.12 Notification live activity widget",
+   "node": "114:1921",
+   "name": "Frame 1321322860",
+   "kind": "texture"
+  },
+  {
+   "screen": "05.13 Notification connected",
+   "node": "107:1449",
+   "name": "Notification",
+   "kind": "progressive-backdrop-blur"
+  },
+  {
+   "screen": "05.13 Notification connected",
+   "node": "107:1537",
+   "name": "Frame 1321322860",
+   "kind": "texture"
+  }
+ ],
+ "stats": {
+  "nodes": 2790,
+  "pruned": 21,
+  "text": 557,
+  "vector": 623,
+  "image": 27
+ }
+}

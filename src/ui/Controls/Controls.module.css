@@ -1,0 +1,86 @@
+/* Checkbox and Switch, on Radix primitives so the a11y is not hand-rolled. */
+
+/* -------------------------------------------------------------- Checkbox */
+
+.checkRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.checkRow[data-disabled='true'] {
+  cursor: default;
+  opacity: 0.5;
+}
+
+/* 16x16, r4, `0 1px 2px rgba(0,0,0,.1)`. Blue when checked — one of the few
+   places `text/link` is allowed to be a fill, because the tick needs contrast. */
+.check {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--r-xs);
+  background: var(--bg-raised);
+  box-shadow: inset 0 0 0 1px var(--border-subtle), var(--sh-check);
+  color: var(--text-inverse);
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.check[data-state='checked'] {
+  background: var(--text-link);
+  box-shadow: inset 0 0 0 1px var(--text-link), var(--sh-check);
+}
+
+.check[data-invalid='true'] {
+  box-shadow: inset 0 0 0 1px var(--status-critical), var(--sh-check);
+}
+
+.checkLabel {
+  user-select: none;
+}
+
+/* ---------------------------------------------------------------- Switch */
+
+.switch {
+  position: relative;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 24px;
+  border-radius: var(--r-pill);
+  background: var(--border-subtle);
+  transition: background-color var(--dur-base) var(--ease-out);
+}
+
+/* Blue, not green. The file draws the auto-top-up switch on in `text/link` —
+   it is an action that is armed, not a thing that has succeeded. */
+.switch[data-state='checked'] {
+  background: var(--text-link);
+}
+
+.switch:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.thumb {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--r-pill);
+  background: var(--bg-raised);
+  box-shadow: var(--sh-card);
+  will-change: transform;
+}
+
+.switchRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}

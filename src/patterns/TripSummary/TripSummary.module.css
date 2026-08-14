@@ -1,0 +1,159 @@
+/* Frame 36 — the trip restated above the pack list. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 0 var(--gutter);
+}
+
+/* Frame 40 */
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+}
+
+/* Frame 38 */
+.top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 30px;
+}
+
+/* Frame 34 */
+.range {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-primary);
+}
+
+/* Frame 20 — one scrolling row, never wrapped. */
+.chips {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  /* The chip's 1px outer ring sits outside its 37px box; without the padding
+     the row clips it top and bottom. */
+  padding: 1px 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.chips::-webkit-scrollbar { display: none; }
+
+/*
+  These are the `Destination` component's Active variant, not plain pills: the
+  same halo the trip form uses — `bg/card` inside a 3px white border inside a
+  1px `border/subtle` ring. Radius 35 outside, 16 inside.
+*/
+.chip {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 37px;
+  padding: 4px 8px;
+  border-radius: var(--r-field);
+  background: var(--bg-card);
+  border: 3px solid var(--p-white);
+  box-shadow: 0 0 0 1px var(--border-subtle);
+}
+
+.chipLabel {
+  text-align: center;
+  color: var(--text-primary);
+}
+
+/* Frame 35 — the number card. */
+.numberRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  height: 68px;
+  padding: 12px;
+  border-radius: var(--r-field);
+  border: 1px solid var(--border-subtle);
+}
+
+/* Frame 41 */
+.number {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Frame 39 */
+.numberText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.iconWrap {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  color: var(--text-primary);
+}
+
+/*
+  Editing in place — a field with four sides, not an underline.
+
+  It was a lone `border-bottom`, which inherited the browser's default control
+  radius at its ends: the rule curved up where it stopped and read as a
+  rendering fault rather than as a field. A box says the same thing without the
+  ambiguity, at `--r-sm` — the smallest radius in the set, because this sits
+  inside the 16px card and a matching radius would fight it.
+
+  The negative margin cancels the field's own padding and border, so the digits
+  do not shift sideways the moment they become editable, and the whole thing
+  lands inside the 44px the row already has. Nothing moves but the border.
+*/
+.numberInput {
+  /* Ten digits, plus the padding and border the box adds around them. */
+  width: 11.8ch;
+  margin-left: -7px;
+  padding: 0 6px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
+  background: var(--bg-raised);
+  color: var(--text-primary);
+  caret-color: var(--text-link);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.numberInput:focus {
+  outline: none;
+  border-color: var(--text-link);
+}
+
+.change {
+  flex: 0 0 auto;
+  color: var(--text-link);
+}
+
+/* Half-typed number: Save is there, and visibly not ready. */
+.change:disabled {
+  color: var(--text-secondary);
+  cursor: default;
+}
+
+.note {
+  display: flex;
+  align-items: center;
+  color: var(--text-primary);
+}

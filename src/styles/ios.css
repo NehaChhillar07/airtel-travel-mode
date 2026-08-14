@@ -1,0 +1,63 @@
+/**
+ * iOS system chrome type.
+ *
+ * Inter stands in for SF Pro. This is operating-system type, not Airtel type,
+ * and it belongs ONLY to the lock screen, notification banners, the status bar
+ * and the Live Activity. Keeping it in its own file is the point: if one of
+ * these classes turns up in a product screen, that is the bug.
+ *
+ * Specs measured from the notification screens (05.7-05.13), 29 Inter nodes.
+ */
+
+/*
+  The glass every iOS surface on the lock screen is made of.
+
+  A class rather than a mixin repeated in two CSS modules: the Live Activity
+  (05.12) and the notification banners (05.7-05.13) are drawn on exactly the
+  same material in the file, and the moment it lives in two places the two
+  drift. `isolation` keeps the halo out of the wallpaper's stacking context.
+*/
+.ios-glass {
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--r-field);
+  background: var(--glass-ios);
+  box-shadow: var(--sh-glass-ios);
+  backdrop-filter: var(--blur-ios);
+  -webkit-backdrop-filter: var(--blur-ios);
+}
+
+/* `Frame 1321322861` — a 5px white ring, blurred to 10.7px, hung behind the
+   surface on a wider radius. It is what lifts the glass off the wallpaper;
+   without it the pill reads as a flat grey rectangle. */
+.ios-glass::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -6px;
+  border: 5px solid var(--glass-ios-halo);
+  border-radius: var(--r-2xl);
+  filter: blur(10.7px);
+  pointer-events: none;
+}
+
+.ios-title {
+  font: 600 15px/20px var(--font-ios);
+  letter-spacing: -0.5px;
+}
+
+.ios-body {
+  font: 400 13px/18px var(--font-ios);
+  letter-spacing: -0.078px;
+}
+
+.ios-caption {
+  font: 400 11.5px/14px var(--font-ios);
+}
+
+/* The status bar clock and battery. */
+.ios-statusbar {
+  font: 600 15px/20px var(--font-ios);
+  letter-spacing: -0.5px;
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "connected",
+    "screen": "05.13",
+    "app": "Airtel",
+    "at": "34m ago",
+    "title": "🇸🇬 You are in {country}, and you are online",
+    "body": "Your pack went live by itself. Day {dayOfTrip} of {tripDays} · unlimited data · about {mins} minutes of calls a day.",
+    "opens": "connected",
+    "tone": "success"
+  },
+  {
+    "id": "not-connected",
+    "screen": "05.11",
+    "app": "Airtel",
+    "at": "12m ago",
+    "title": "Your phone hasn't found a network yet",
+    "body": "You've landed in {country} but nothing has registered. Three quick checks usually fix it.",
+    "opens": "not-connected",
+    "tone": "alert"
+  },
+  {
+    "id": "missed-call",
+    "screen": "05.10",
+    "app": "Airtel",
+    "at": "2h ago",
+    "title": "{amount} for calls you didn't take",
+    "body": "Three calls were forwarded to your voicemail in India. Each one is billed as an outgoing call.",
+    "opens": "dashboard",
+    "tone": "alert"
+  },
+  {
+    "id": "usage-warning",
+    "screen": "05.09",
+    "app": "Airtel",
+    "at": "5h ago",
+    "title": "You've used {dataPct} of your full-speed data",
+    "body": "After {fup} GB you stay connected at 80 Kbps. Enough for maps and messages.",
+    "opens": "dashboard",
+    "tone": "neutral"
+  },
+  {
+    "id": "pack-ending",
+    "screen": "05.08",
+    "app": "Airtel",
+    "at": "1h ago",
+    "title": "Your pack ends tomorrow",
+    "body": "{price} adds another {validity} days. Nothing happens automatically.",
+    "opens": "dashboard",
+    "tone": "alert"
+  },
+  {
+    "id": "pack-ended",
+    "screen": "05.07",
+    "app": "Airtel",
+    "at": "20m ago",
+    "title": "Your pack has ended",
+    "body": "Calls, texts and data still work, now at standard roaming rates.",
+    "opens": "pack-ended",
+    "tone": "alert"
+  }
+]

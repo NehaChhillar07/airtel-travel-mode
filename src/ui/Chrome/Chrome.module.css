@@ -1,0 +1,198 @@
+/* Phone and app chrome: status bar, nav bar, app header, quick-action tiles. */
+
+/* --------------------------------------------------------------- StatusBar */
+
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--statusbar-h);
+  padding: 0 24px 0 28px;
+  background: var(--bg-screen);
+  color: var(--text-heading);
+}
+
+.statusDark {
+  background: transparent;
+  color: var(--text-inverse);
+}
+
+.statusIcons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* The file draws the battery as a solid dark pill with the number inside,
+   not as the usual outlined cell. */
+.batteryPill {
+  display: flex;
+  align-items: flex-start;
+  width: 30px;
+  height: 20px;
+  padding: 2px 7px;
+  border-radius: var(--r-pill);
+  background: var(--p-ink-800);
+  color: var(--text-inverse);
+  font-variant-numeric: tabular-nums;
+}
+
+.statusDark .batteryPill {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--p-ink-800);
+}
+
+/* ----------------------------------------------------------------- NavBar */
+
+/* `min-height`, not `height`: 04.6 hangs a 38px chip off the trailing slot and
+   the frame grows to 62 to hold it. Bars with nothing trailing stay at 44. */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: var(--navbar-h);
+  padding: 12px var(--gutter);
+  background: var(--bg-screen);
+}
+
+.navBack {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  /* Same grey as the title — the chevron is not the emphasis here. */
+  color: var(--text-secondary);
+}
+
+.navTitle {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.navTrailing { flex: 0 0 auto; }
+
+/* -------------------------------------------------------------- AppHeader */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-h);
+  padding: 0 var(--gutter);
+  background: var(--bg-screen);
+}
+
+.menuBtn {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin-left: -2px;
+  color: var(--text-primary);
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--text-primary);
+}
+
+/* Chip-grey fill, no shadow — matches the drawn pill. */
+.scanQr {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 38px;
+  padding: 9px 14px 9px 16px;
+  border-radius: var(--r-pill);
+  background: var(--bg-chip);
+  color: var(--text-heading);
+}
+
+.iconBtn {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  color: var(--text-primary);
+}
+
+/* ---------------------------------------------------------------- TileRow
+   `Tile` COMPONENT_SET — Property 1=Default / Active, 60x89.
+
+   Both states sit on the same `bg/chip` fill. Active is not a different colour:
+   it is the same halo the Destination chip uses — a 2px white inner border
+   inside a 1px `border/subtle` outer one, plus the small card shadow — with a
+   brand-red rule under a semibold label. */
+
+.tiles {
+  display: flex;
+  gap: 16px;
+  min-height: var(--tilerow-h);
+  /* Top only. `overflow-x: auto` makes this box clip vertically too, so the row
+     needs room above or the active tile's ring is sheared off — but the active
+     rule has to land on the divider, not float above it, so the bottom stays at
+     zero and the rule sits flush against the border. */
+  padding: 8px var(--gutter) 0;
+  background: var(--bg-screen);
+  border-bottom: 1px solid var(--border-subtle);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tiles::-webkit-scrollbar { display: none; }
+
+.tile {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  width: 60px;
+}
+
+.tileIcon {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 56px;
+  border-radius: var(--r-card);
+  background: var(--bg-chip);
+  color: var(--p-ink-800);
+  transition: box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.tile[data-state='active'] .tileIcon {
+  box-shadow: inset 0 0 0 2px var(--p-white), 0 0 0 1px var(--border-subtle), var(--sh-card);
+}
+
+.tileLabelWrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 24px;
+}
+
+.tileLabel {
+  white-space: nowrap;
+  color: var(--text-heading);
+}
+
+/* The rule spans the label, not the tile — 38px under "Travel", not 60px. */
+.tileRule {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: var(--r-pill);
+  background: var(--brand);
+}

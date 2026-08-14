@@ -1,0 +1,171 @@
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 26px var(--gutter) 20px;
+  text-align: center;
+}
+
+/* The "arrival" set piece: bars fill one at a time when the phone registers,
+   and shake once then settle grey when it does not. */
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  height: 44px;
+}
+
+.bar {
+  width: 10px;
+  border-radius: 3px;
+  background: var(--status-success);
+  transform-origin: bottom center;
+}
+
+.barOff { background: var(--border-subtle); }
+
+.heroTitle { max-width: 310px; }
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 4px var(--gutter) 36px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rowBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* ------------------------------------------------------------- checklist
+   05.1 Setup checklist. Measured off the Figma frame: a 19px-gapped column of
+   gradient cards, each 20px padded with a 12px internal gap. */
+
+.setupBody {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  padding: 0 var(--gutter) 118px;
+}
+
+.setupBody .setupIntro { color: var(--text-primary); }
+
+.stepCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-field);
+  background: var(--grad-chip);
+}
+
+/* Title and reason ride together, tighter than the 12px card gap. */
+.stepHead {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.stepCard .stepWhy { color: var(--text-primary); }
+
+/* Lavender block, centred, uppercase and letter-spaced. */
+.stepCard .path {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 10px;
+  border-radius: var(--r-sm);
+  background: var(--p-lavender-050);
+  color: var(--text-primary);
+  text-align: center;
+  word-break: break-word;
+}
+
+.stepCard .after { color: var(--text-primary); }
+
+/* The restart sequence. The frame numbers it, so it is an ordered list — and
+   a block one, since flex children lose their markers. */
+.noteList {
+  margin: 0;
+  padding-left: 18px;
+  /* global.css strips markers off every list; here the numbers are content. */
+  list-style: decimal;
+  color: var(--text-link);
+  font: 500 12px/21px var(--font-ui);
+}
+
+/* Both options live in one bordered box, split by a hairline — not two chips. */
+.picks {
+  display: flex;
+  flex-direction: column;
+  padding: 0 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+}
+
+.pick {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.pick + .pick { border-top: 1px solid var(--border-subtle); }
+
+.pick .pickLabel { flex: 0 0 120px; color: var(--text-primary); }
+
+.pick .pickHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-primary);
+}
+
+/* The recommended row is the only one carrying weight and the link blue. */
+.pickGood .pickLabel,
+.pickGood .pickHint { font-weight: 600; }
+
+.pickGood .pickHint { color: var(--text-link); }
+
+/* Two equal columns so the note under the Whatsapp button lines up with it
+   exactly, rather than being centred under the bar as a whole. */
+.footBar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+  padding: 24px var(--gutter) 36px;
+}
+
+.footBar .footNote {
+  grid-column: 2;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* The number the call goes to, under the label. A button that only says
+   "Call, Free" tells you nothing about what it is about to dial — the Figma
+   frame leaves it out, and this puts it back. */
+.callLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.callLabel .callNumber {
+  color: var(--text-inverse);
+  opacity: 0.72;
+  font-variant-numeric: tabular-nums;
+}

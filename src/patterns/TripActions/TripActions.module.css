@@ -1,0 +1,166 @@
+/**
+ * The three blocks every away screen ends with — `Frame 1321322918` on 05.4.
+ *
+ * 05.2 and 05.4 draw them identically, so they are one set of components. The
+ * numbers in the comments are the frame's.
+ */
+
+/* -------------------------------------------------------------- action row
+   `Frame 96` — 353 wide, 16px padded top and bottom, an 8px gap, a #CDD3DD
+   hairline under all but the last. The caption sits under the title rather
+   than under the whole row, so the space beneath the icon stays blank. */
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--gutter);
+}
+
+/*
+  Icon column, then content column.
+
+  `flex-start` is the whole alignment: the icon's top meets the title's top and
+  stays there whether the title runs to one line or two. Centring them put the
+  icon 5.5px above a one-line title, and on the two-line row floated it between
+  the lines instead of tracking the words it belongs to.
+*/
+.row {
+  --icon-size: 33px;
+  --icon-gap: 12px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: var(--icon-gap);
+  width: 100%;
+  padding: 16px 0;
+  text-align: left;
+}
+
+/* Everything the icon labels. The caption is indented because it lives in this
+   column, not because anything measured the icon to indent it. */
+.rowBody {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  flex-direction: column;
+  /* `Frame 96` — 8px between the title and its caption. */
+  gap: 8px;
+}
+
+.rowDivided { border-bottom: 1px solid var(--border-subtle); }
+
+/* `Frame 95` — the title line. */
+.rowHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+/* `Frame 1321322916` — 33x33, #F8F9FE on a #CDD3DD hairline, 8px radius. The
+   glyph inside is the one place the action blue appears at icon size. */
+.icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: var(--icon-size, 33px);
+  height: var(--icon-size, 33px);
+  border-radius: var(--r-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-link);
+}
+
+/* The 5G mark is set, not drawn — it is a wordmark at icon size. */
+.icon5g {
+  font: 700 11px/1 var(--font-ui);
+  letter-spacing: -0.2px;
+}
+
+.rowTitle { color: var(--text-primary); }
+
+.rowNote {
+  display: block;
+  color: var(--text-primary);
+}
+
+.chevron {
+  flex: 0 0 auto;
+  color: var(--text-primary);
+}
+
+/* ---------------------------------------------------------- stop the drain
+   `Frame 1321322918` — white-to-blush, 16px radius, 16px padded.
+
+   The frame draws the border in #D73737. It is grey here on request: the card
+   is a standing offer rather than an alarm, and a red outline around two rows
+   that are always on screen reads as an error the user cannot clear. The blush
+   wash still separates it from the rows above. */
+
+.drainWrap { padding: 0 var(--gutter); }
+
+.drain {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  border-radius: var(--r-field);
+  border: 1px solid var(--border-subtle);
+  background: var(--grad-blush);
+}
+
+.drainHead { color: var(--text-secondary); }
+
+.drainRows {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------------------------------------------------------------- help card
+   `Frame 89` — the ink gradient run diagonally, 16px radius, 16px padded. */
+
+.helpWrap { padding: 0 var(--gutter); }
+
+.help {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: var(--r-field);
+  border: 1px solid var(--p-black);
+  background: var(--grad-ink-diag);
+  color: var(--text-inverse);
+}
+
+.helpLead {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.helpBtns {
+  display: flex;
+  gap: 12px;
+}
+
+/* 48px tall, 12px radius, 24px side padding — both, one filled white and one
+   outlined in it. */
+.helpBtn {
+  display: inline-flex;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: var(--r-lg);
+  background: var(--p-white);
+  color: var(--p-black);
+  white-space: nowrap;
+}
+
+.helpBtnGhost {
+  background: transparent;
+  color: var(--text-inverse);
+  box-shadow: inset 0 0 0 1px var(--p-white);
+}

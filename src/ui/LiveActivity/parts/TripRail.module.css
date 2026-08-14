@@ -1,0 +1,107 @@
+/**
+ * `Frame 1321322870` — the route and its four stops, 13px between the line and
+ * its labels.
+ *
+ * The frame is 44 tall in Figma (15 dot + 13 gap + 16 label). It is taller
+ * here because the plane rides above the line, which the static frame had no
+ * need to leave room for.
+ */
+.rail {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.track {
+  position: relative;
+  height: 40px;
+}
+
+/* `default` — a 1px #CDD3DD rule end to end, inset so it starts and finishes
+   under the centre of the first and last dots rather than beside them. */
+.line {
+  position: absolute;
+  right: 7.5px;
+  bottom: 6.5px;
+  left: 7.5px;
+  height: 2px;
+  border-radius: var(--r-pill);
+  background: var(--border-subtle);
+}
+
+/* `success` — the part of the trip behind you. Figma draws it 109px long on a
+   trip at step 1; the component derives the same number from the step. */
+.lineDone {
+  position: absolute;
+  bottom: 6.5px;
+  left: 0;
+  height: 2px;
+  border-radius: var(--r-pill);
+  background: var(--status-success);
+}
+
+/* `Ellipse 1/3/5/6` — 15px, 2px ring. Green on green behind you, white on the
+   hairline ahead of you. */
+.dot {
+  position: absolute;
+  bottom: 0;
+  width: 15px;
+  height: 15px;
+  border-radius: var(--r-pill);
+  background: var(--bg-raised);
+  box-shadow: inset 0 0 0 2px var(--border-subtle);
+}
+
+.dot[data-state='done'],
+.dot[data-state='now'] {
+  background: var(--status-success);
+  box-shadow: inset 0 0 0 2px var(--bg-success);
+}
+
+.pulse {
+  position: absolute;
+  bottom: 0;
+  width: 15px;
+  height: 15px;
+  border-radius: var(--r-pill);
+  background: var(--bg-success);
+  pointer-events: none;
+}
+
+.planeWrap {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  display: block;
+  width: 30px;
+  height: 22px;
+  margin-left: -15px;
+}
+
+/* The asset is drawn nose-left. Mirrored, it flies the way the line runs —
+   the same mirror the frame applies to the collapsed pill's copy of it. */
+.plane {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scaleX(-1);
+}
+
+.labels {
+  position: relative;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.label {
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  color: var(--text-primary);
+}
+
+.labelAhead {
+  color: var(--text-secondary);
+}

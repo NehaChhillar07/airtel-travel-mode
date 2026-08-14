@@ -1,0 +1,35 @@
+.screenview {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  flex: 0 0 auto;
+}
+
+.screenview__scroll {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.screenview__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.screenview__content {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+/* Chrome Figma marked scrollBehavior: FIXED. Lifted out of the scroll so it
+   pins, exactly as it does in the Figma prototype. */
+.screenview__chrome {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  pointer-events: auto;
+}

@@ -1,0 +1,211 @@
+/**
+ * 05.3 Not connected troubleshooting.
+ *
+ * Measured off the frame the assignment ships as CSS. The numbers in the
+ * comments are the ones from that export.
+ */
+
+/* `Trip progress` — 393x362, 20px padded top and bottom. */
+.progress {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+/* `Frame 1321322884` — the headline card's gutter. */
+.headWrap {
+  padding: 0 var(--gutter);
+}
+
+/* `Frame 1321322886` — 353 wide, #F8F9FE, 16px radius, 16px padding, 12px gap.
+   Two blocks only: what happened, and what it means for the pack. */
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: var(--r-field);
+  background: var(--bg-card);
+}
+
+/* The file caps this at 292px, a two-line box in Tondo. Poppins sets the same
+   sentence wider, so the cap is the card's own column — two lines is the shape
+   that matters, not the exact break. */
+.headTitle { max-width: 321px; }
+.headBody { color: var(--text-secondary); }
+
+/*
+  `Frame 1321322889`. The file indents this to 36px, but at Poppins widths the
+  sentence wraps and the second line reads as a stray fragment floating off the
+  cards' left edge. It is the caption to the three steps, so it takes their
+  gutter and sits closer to them than to the headline above — 24px up, 12px
+  down. `balance` keeps the two lines even instead of orphaning "order."
+*/
+.lead {
+  padding: 4px var(--gutter) 12px;
+  color: var(--status-critical);
+  text-wrap: balance;
+}
+
+/* `Frame 1321322887` — the three steps, 16px apart. */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 var(--gutter);
+}
+
+/* `Frame 104` / `Frame 105` / `Frame 106` — 353 wide, 20px padded, 12px gap,
+   on the gradient that is the most-used fill in the document. */
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-field);
+  background: var(--grad-chip);
+}
+
+/* `Frame 106` — title and reason ride together, tighter than the card gap. */
+.stepHead {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.stepWhy { color: var(--text-primary); }
+
+/* `Frame 105` — the settings path. Lavender, centred, 5px radius, and the one
+   place a 52px block carries `label/12` at two lines. */
+.path {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 10px;
+  border-radius: 5px;
+  background: var(--p-lavender-050);
+  color: var(--text-primary);
+  text-align: center;
+}
+
+/* `Frame 109` — both options in one bordered box split by a hairline, not two
+   chips. 12px radius, and the box is inset 12px rather than the rows being. */
+.picks {
+  display: flex;
+  flex-direction: column;
+  padding: 0 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+}
+
+.pick {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.pick + .pick { border-top: 1px solid var(--border-subtle); }
+
+.pickLabel {
+  flex: 0 0 120px;
+  color: var(--text-primary);
+}
+
+.pickHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-primary);
+}
+
+/* The recommended row is the only one carrying weight and the link blue. */
+.pickGood .pickLabel,
+.pickGood .pickHint {
+  font-weight: 600;
+  color: var(--text-link);
+}
+
+.pickGood .pickLabel { color: var(--text-primary); }
+
+/* The restart sequence — Poppins 500 12/21 in `text/link`, numbered. A flex
+   column would turn the items into flex children and drop the markers, so it
+   stays a block list. */
+.notes {
+  margin: 0;
+  padding-left: 18px;
+  /* global.css strips list markers off every ul and ol; this is the one place
+     the numbering is the content rather than decoration. */
+  list-style: decimal;
+  color: var(--text-link);
+  font: 500 12px/21px var(--font-ui);
+}
+
+.stepAfter { color: var(--text-primary); }
+
+/* `Frame 105` again — the step CTA is blue here, not the house black. It opens
+   a system setting rather than committing anything, and the file draws it so. */
+.stepCta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 24px;
+  border: 1px solid var(--text-link);
+  border-radius: var(--r-lg);
+  background: var(--text-link);
+  color: var(--text-inverse);
+}
+
+/* `Frame 31` — 24/20/36, a 12px gap, two 54px buttons over one caption. */
+.foot {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px var(--gutter) 36px;
+}
+
+/* `stretch`, not the frame's `flex-start`: the call button carries a second
+   line and the two must still finish at the same height. */
+.footBtns {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.footBtn {
+  display: inline-flex;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 54px;
+  padding: 8px 24px;
+  border-radius: var(--r-lg);
+  background: var(--p-black);
+  color: var(--text-inverse);
+  white-space: nowrap;
+}
+
+/* The frame already stacks this one — `flex-direction: column`, a 6px gap and
+   room in the 54px for a line the file never filled in. */
+.footBtnCall {
+  flex-direction: column;
+  gap: 2px;
+}
+
+.footNumber {
+  color: var(--text-inverse);
+  opacity: 0.72;
+  font-variant-numeric: tabular-nums;
+}
+
+.footBtnGhost {
+  background: transparent;
+  color: var(--p-black);
+  box-shadow: inset 0 0 0 1px var(--p-black);
+}
+
+.footNote { color: var(--text-primary); }

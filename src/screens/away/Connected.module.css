@@ -1,0 +1,101 @@
+/**
+ * 05.2 Connected confirmation.
+ *
+ * Measured off the frame the assignment ships as CSS: a 393px column of
+ * absolutely-positioned Figma frames, rebuilt here as flow so it can scroll.
+ * The numbers in the comments are the ones from that export.
+ */
+
+/* ------------------------------------------------------------- summary card
+   `Frame 1321322886` — 353 wide, #F8F9FE, 16px radius, 16px padding, and a
+   24px gap between the headline and the three rows under it. */
+
+.summaryWrap {
+  padding: 0 var(--gutter);
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px;
+  border-radius: var(--r-field);
+  background: var(--bg-card);
+}
+
+/* The country and the word "connected" are the two things the screen is
+   actually reporting, so they are the two things carrying colour. */
+/* The file caps this at 263px, which is a two-line box in Tondo. Poppins sets
+   the same sentence wider, so the cap is the card's own column instead — the
+   shape that matters is two lines, not the exact break. */
+.summaryTitle { max-width: 321px; }
+.summaryCountry { color: var(--brand); }
+.summaryVerb { color: var(--text-link); }
+
+.summaryRows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.summaryRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* `Frame 1321322877` — 30x30, on the card's own fill with a lavender hairline
+   so it reads as an inset rather than a raised chip. */
+.summaryIcon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--r-md);
+  background: var(--bg-card);
+  border: 1px solid var(--p-lavender-050);
+  color: var(--text-secondary);
+}
+
+.summaryText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.summaryText > span:last-child { color: var(--text-primary); }
+
+/* ---------------------------------------------------------------- foot bar
+   `Frame 31` — the one line under the fold, on the sheet lip the Screen
+   component already draws. */
+
+.foot {
+  padding: 24px var(--gutter) 36px;
+  color: var(--text-primary);
+}
+
+/* -------------------------------------------------------------------- body */
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 24px;
+}
+
+/* The band sits flush under the header — `Frame 1321322918` starts at 215,
+   which is exactly the height of the chrome above it. */
+.arrival {
+  display: flex;
+  flex-direction: column;
+}
+
+/* `Trip progress` — 20px above the route leg, then the summary card against
+   it with no gap, exactly as the frame stacks them. */
+.progress {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}

@@ -1,0 +1,103 @@
+.screen {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  background: #101014;
+}
+
+/* The wallpaper is a real asset in the file — `image 9`, on all seven
+   notification screens. */
+.wallpaper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* iOS darkens the top of the wallpaper behind the clock so white type holds. */
+.wash {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.12) 32%,
+    rgba(0, 0, 0, 0) 55%
+  );
+  pointer-events: none;
+}
+
+/* Date above the clock, as iOS stacks them. */
+/* The height the baked-in clock occupies, so the banners start below it. */
+.clockSpacer {
+  height: 168px;
+}
+
+.date {
+  font: 600 17px/22px var(--font-ios);
+  letter-spacing: -0.3px;
+  opacity: 0.92;
+}
+
+.time {
+  font: 500 82px/92px var(--font-ios);
+  letter-spacing: -3px;
+  opacity: 0.96;
+}
+
+/* Same box as the Live Activity below: a banner and the widget are the same
+   355 in the same place, and 05.12 is one of these eight screens. */
+.notifications {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 40px 19px 0;
+}
+
+/* ---------------------------------------------------------- Live Activity */
+
+/* The widget itself is ui/LiveActivity. This is only where it sits: 355 wide
+   centred in the 393 frame, below the clock the wallpaper already carries. */
+.islandWrap {
+  padding: 40px 19px 0;
+}
+
+/* Flashlight and camera, and the home indicator — the furniture that makes a
+   lock screen read as one. */
+.furniture {
+  position: absolute;
+  bottom: 84px;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  pointer-events: none;
+}
+
+.furnitureBtn {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--r-pill);
+  background: rgba(0, 0, 0, 0.35);
+  color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.homeBar {
+  position: absolute;
+  bottom: 9px;
+  left: 50%;
+  width: 140px;
+  height: 5px;
+  margin-left: -70px;
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.85);
+}
+

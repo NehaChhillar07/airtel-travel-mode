@@ -1,0 +1,234 @@
+/*
+  The top padding clears the Recommended badge, which hangs 14px above the
+  first card's edge (PackCard.module.css). At the old 6px the badge landed on
+  top of "No extra charge for crossing borders." — the badge is out of flow,
+  so the gap has to be big enough for it plus the space either side.
+*/
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 30px var(--gutter) 32px;
+}
+
+/* Recommended card sits alone above the divider; the rest come after the
+   "Other Plans" rule, exactly as the source screen groups them. */
+.otherHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.cardWrap {
+  position: relative;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px var(--gutter) 24px;
+}
+
+.caption {
+  display: block;
+  text-align: center;
+}
+
+.error {
+  display: block;
+  text-align: center;
+}
+
+/* ------------------------------------------------------- 04.5 Pack detail
+   Frame 54: one 353px column with 25px between blocks. */
+
+/*
+  The top padding is not decoration. The scroll container clips at its own top
+  edge, and the stat cards carry a 1px ring *outside* their box, so with no
+  padding the first row of cards came up shaved. 13px here plus the 12px the
+  sheet header already has below the title is the frame's 25px.
+*/
+.sheetBody {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 13px var(--gutter) 20px;
+}
+
+/* Frame 53's right-hand pill. Figma draws 35px outside a 16px fill; at 30px
+   tall both clamp to the same pill, so one element carries both rings. */
+.daysChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-radius: var(--r-field);
+  background: var(--bg-card);
+  box-shadow: var(--ring-selected-inner), var(--ring-selected-outer);
+}
+
+/* Frame 51. Not the centred hero blocks the previous build drew — the file
+   left-aligns these and sets them in heading/18, not display/32. */
+.blocks {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.block {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px;
+  border-radius: var(--r-card);
+  background: var(--bg-card);
+  box-shadow: var(--ring-selected-inner), var(--ring-selected-outer);
+}
+
+/* Frame 52. Block layout, not flex — flex children lose their list markers. */
+.notes {
+  margin: 0;
+  padding-left: 20px;
+  list-style: disc;
+}
+
+.notes > li + li {
+  margin-top: 12px;
+}
+
+/* Frame 55. Grey, not the blue info card — the only blue on it is the title. */
+.inflight {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 16px;
+  border-radius: var(--r-xl);
+  background: var(--bg-card);
+}
+
+/*
+  `image 6`, at the offsets the file gives it. It is meant to *leave* the card
+  — the nose of the plane sits above the top edge, over the white sheet — so
+  the card must not clip, and the negative z-index is what keeps the trail over
+  the grey fill but under the text.
+*/
+.inflightArt {
+  position: absolute;
+  z-index: -1;
+  top: -29px;
+  left: 91px;
+  width: 265px;
+  height: 159px;
+  transform: scaleX(-1);
+  /* The source PNG is solid black line art; the frame renders it grey. */
+  opacity: 0.68;
+  pointer-events: none;
+}
+
+.inflightHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Frame 62: the two coverage rows, their rule, and the exclusion note. */
+.facts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.factRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+}
+
+/* Solid blue glyphs, as the file draws them — a disc for the world and a
+   boarding-pass tile for the flights, not two hairline outlines. */
+.factIcon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  background: var(--text-link);
+  color: var(--text-inverse);
+}
+
+.factIconDisc {
+  border-radius: var(--r-pill);
+}
+
+.factIconTile {
+  border-radius: var(--r-md);
+}
+
+.factText {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.factChev {
+  flex: 0 0 auto;
+  color: var(--text-secondary);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.factChev[data-open='true'] {
+  transform: rotate(180deg);
+}
+
+.factPanel {
+  overflow: hidden;
+}
+
+/* Lines 4 and 5. The file stacks two identical rules 12px apart, which reads
+   as a double border; one is what it means. */
+.factRule {
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+/* Frame 58. Amber rather than grey — it is a restriction, not helper text. */
+.exclusion {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.exclusionIcon {
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+.countryGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+/* Frame 31 — this sheet brings its own bottom bar rather than borrowing the
+   list screen's, so the padding is the frame's, not the Sheet default. */
+.sheetFoot {
+  --sheet-foot-pad: 24px var(--gutter) 36px;
+  border-radius: 16px 16px 0 0;
+}
+
+.sheetFootInner {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

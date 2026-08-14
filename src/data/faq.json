@@ -1,0 +1,37 @@
+[
+  {
+    "id": "when-starts",
+    "question": "When do my days start counting?",
+    "answer": "The first time your phone connects to a network outside India — not when you buy the pack, and not when the plane takes off. If your flight is delayed a day, you don’t lose a day."
+  },
+  {
+    "id": "crossing-borders",
+    "question": "What happens when I cross a border?",
+    "answer": "Nothing. If the country is on your pack, you keep the same allowance and the same price. There is no per-country charge and nothing to switch on."
+  },
+  {
+    "id": "runs-out",
+    "question": "What if the pack runs out while I’m away?",
+    "answer": "Data stops at the allowance rather than continuing at a surprise rate. You can add another pack from the trip dashboard, and it stacks on top of whatever days you have left."
+  },
+  {
+    "id": "incoming-calls",
+    "question": "Are incoming calls free?",
+    "answer": "Incoming calls are included on packs that carry minutes. Calls you decline are not free — declining still routes the call onward to voicemail, and that counts as a connected minute."
+  },
+  {
+    "id": "voicemail",
+    "question": "Why am I charged for calls I never answered?",
+    "answer": "Unanswered calls are forwarded to your voicemail box in India, and each hop is billed as an outgoing international call. Turning voicemail divert off before you fly stops it."
+  },
+  {
+    "id": "cancel",
+    "question": "Can I cancel before I travel?",
+    "answer": "Yes. Remove the pack any time before it starts and nothing is charged. Once it has started you can’t refund the days you’ve used."
+  },
+  {
+    "id": "billing",
+    "question": "When am I actually charged?",
+    "answer": "Nothing is taken now. The amount is added to your next postpaid bill on the date shown on the review screen."
+  }
+]

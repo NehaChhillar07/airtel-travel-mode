@@ -1,0 +1,23 @@
+[
+  {
+    "id": "now",
+    "when": "Now",
+    "title": "Pack confirmed",
+    "body": null,
+    "tone": "done"
+  },
+  {
+    "id": "depart",
+    "when": "{departShort}",
+    "title": "Your {tripDays} day trip starts",
+    "body": "Nothing has been paid yet",
+    "tone": "upcoming"
+  },
+  {
+    "id": "bill",
+    "when": "{billShort}",
+    "title": "{price} plus GST on your bill",
+    "body": "Your {validity} days start the first time you connect outside India",
+    "tone": "upcoming"
+  }
+]

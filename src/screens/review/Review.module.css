@@ -1,0 +1,202 @@
+/**
+ * 04.6 Review and billing.
+ *
+ * Measured off the frame the assignment ships as CSS. The numbers in the
+ * comments are the ones from that export.
+ */
+
+/* `Frame 74` — 0 20px, a 16px gap, and no top padding: the first card sits
+   straight under the 116px of chrome. */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 var(--gutter) 32px;
+}
+
+/*
+  `Frame 64` / `Frame 35` — both cards are 353 wide, 12px padded with a 6px
+  gap, 16px radius, on a hairline. Their `Change` action is positioned rather
+  than laid out, because the frame hangs it off the card's top-right corner
+  level with the overline rather than in a row with it.
+*/
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  border-radius: var(--r-field);
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+}
+
+/* `Charged to` is ringed in link blue and carries no fill at all. */
+.panelAccent {
+  background: transparent;
+  border-color: var(--text-link);
+}
+
+.panelChange {
+  position: absolute;
+  right: 12px;
+  top: 13px;
+  color: var(--text-link);
+}
+
+/* ---------------------------------------------------------- your pack card
+   `Frame 65` — the price block, a rule, and the reason under it. */
+
+.pack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* `Frame 48` */
+.packLead {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* `Frame 46` — price against validity, 10px apart and on one baseline. */
+.packPrice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.packContents { color: var(--text-primary); }
+
+.rule {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: var(--border-subtle);
+}
+
+/* `Frame 47` — the tick sits at the top of a reason that can run to two
+   lines, so the row aligns to the start rather than the centre. */
+.packReason {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--text-primary);
+}
+
+.packTick {
+  flex: 0 0 auto;
+  margin-top: 1px;
+  color: var(--status-success);
+}
+
+/* --------------------------------------------------------------- charged to
+   `Frame 41` — a 36px tile against a two-line stack, 12px apart. */
+
+.charged {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* `Frame 75` — #F0F3F8 at 8px radius, with the glyph in link blue. It is the
+   only icon on the screen and it is pointing at the thing being charged. */
+.chargedIcon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-md);
+  background: var(--bg-chip);
+  color: var(--text-link);
+}
+
+/* `Frame 39` */
+.chargedText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* -------------------------------------------------------------- bill card
+   `Frame 65` again — #F8F9FE on a hairline, 12px padded, 12px between the
+   two-line block, the rule, the total and the note. */
+
+.bill {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  border-radius: var(--r-field);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+}
+
+/* `Frame 71` — the two charge lines ride tighter than the card's own gap. */
+.billLines {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.billRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.billLabel { color: var(--text-secondary); }
+
+/* The total's overline is `text/primary`, unlike the two grey labels above it
+   and unlike every other `label/12` on the screen. */
+.billTotalLabel { color: var(--text-primary); }
+
+/*
+  `Frame 72` — the date is the part that costs you something if you misread
+  it, so it carries the weight and the red. The rest of the sentence is a
+  reassurance and reads as body.
+*/
+.billNote { color: var(--text-primary); }
+.billNoteLead { color: var(--status-critical); }
+
+/* -------------------------------------------------------------- bottom bar
+   `Frame 55` — 24/20/36 with a 12px gap, on the sheet lip the Screen
+   component already draws. */
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px var(--gutter) 36px;
+}
+
+.caption {
+  display: block;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+/* --------------------------------------------------------------- nav chip
+   `Destination` — the same two-ring treatment as the trip band's chips, at
+   38px, carrying three flags and the day count as one `heading/18` line. */
+
+.headerChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 38px;
+  padding: 4px 8px;
+  border-radius: var(--r-field);
+  background: var(--bg-card);
+  box-shadow: var(--ring-selected-inner), 0 0 0 1px var(--border-subtle);
+}
+
+.flags {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}

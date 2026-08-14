@@ -1,0 +1,111 @@
+/**
+ * `Button` — the Figma COMPONENT_SET (`type=Primary` / `type=Secondary`).
+ *
+ * The primary fill is BLACK. That is not a placeholder — the Foundations board
+ * is explicit about it: "The primary CTA in the Airtel app is BLACK, not red.
+ * Every button on the account page is black." Brand red is for the wordmark
+ * and the active nav tab.
+ */
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--r-lg);
+  padding: 0 20px;
+  white-space: nowrap;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.full {
+  width: 100%;
+}
+
+/* ------------------------------------------------------------------ sizes */
+.lg { height: 48px; }
+.md { height: 40px; }
+.sm { height: 32px; padding: 0 14px; border-radius: var(--r-md); }
+
+/* --------------------------------------------------------------- variants */
+
+.primary {
+  background: var(--action-primary-fill);
+  color: var(--action-primary-text);
+}
+
+.secondary {
+  background: var(--bg-raised);
+  color: var(--text-primary);
+  box-shadow: inset 0 0 0 1px var(--action-secondary-border);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--text-link);
+  padding: 0 8px;
+}
+
+.destructive {
+  background: var(--status-critical);
+  color: var(--text-inverse);
+}
+
+/* The review screen's commit CTA. The only button in the file filled with
+   `text/link`, which the Foundations board says is for text actions only —
+   recorded in DIVERGENCES rather than quietly normalised to black. */
+.commit {
+  background: var(--text-link);
+  color: var(--text-inverse);
+}
+
+.commit:disabled { background: var(--action-primary-disabled); }
+
+/* ----------------------------------------------------------------- states */
+
+.btn:disabled {
+  cursor: default;
+}
+
+.primary:disabled,
+.destructive:disabled {
+  background: var(--action-primary-disabled);
+  color: var(--text-inverse);
+}
+
+.secondary:disabled {
+  color: var(--text-secondary);
+  box-shadow: inset 0 0 0 1px var(--border-subtle);
+}
+
+.ghost:disabled {
+  color: var(--text-secondary);
+}
+
+/* Loading and success are for the one screen where money is committed, so the
+   commit reads as something that happened rather than an instant page swap. */
+.busy {
+  pointer-events: none;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--r-pill);
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.success {
+  background: var(--status-success);
+  color: var(--text-inverse);
+}

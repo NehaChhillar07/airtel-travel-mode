@@ -1,0 +1,134 @@
+/**
+ * Type scale — the only text primitives in the product.
+ *
+ * These are the twelve TEXT styles named in the Figma file itself
+ * (figma-export/raw/styles.json), with the weights, sizes, line heights and
+ * letter spacing measured off the nodes that use them. Class names mirror the
+ * style names, so `value/16 Med` is `.t-value-16-med`.
+ *
+ * Nothing in src/ui, src/patterns or src/screens may set `font-size`,
+ * `font-weight` or `line-height` directly. If a design needs a size that is not
+ * here, the scale is wrong — fix it here.
+ *
+ * Note on the Foundations board: it says "Regular and Bold only… Eight styles,
+ * and nothing on any screen uses a size outside this list", which
+ * SOURCE_ISSUES.md §4 flags as contradicting the file. The file wins — these
+ * twelve are what the document actually uses, and four of them (title/24 Med,
+ * value/16 Med, body/14 Med, caption/12 Semi) are Medium or Semibold. The
+ * board's rule text is what needs updating.
+ *
+ * There is no 28px style. 48 nodes render Poppins 700 / 28 — every one of them
+ * is a flag emoji glyph, sized by the Flag component, not text.
+ */
+
+/* One hero figure per screen: days left, amount. */
+.t-display-32 {
+  font: 700 32px/36px var(--font-ui);
+  letter-spacing: -0.5px;
+  color: var(--text-heading);
+}
+
+/* Screen title. */
+.t-title-24 {
+  font: 700 24px/30px var(--font-ui);
+  letter-spacing: -0.3px;
+  color: var(--text-primary);
+}
+
+.t-title-24-med {
+  font: 500 24px/30px var(--font-ui);
+  letter-spacing: -0.3px;
+  color: var(--text-primary);
+}
+
+/* Card heading. */
+.t-heading-18 {
+  font: 700 18px/24px var(--font-ui);
+  color: var(--text-primary);
+}
+
+/* Row values, button labels, service names. The most-used of the pair. */
+.t-value-16-med {
+  font: 500 16px/22px var(--font-ui);
+  color: var(--text-primary);
+}
+
+.t-value-16-bold {
+  font: 700 16px/22px var(--font-ui);
+  color: var(--text-primary);
+}
+
+/* Default text. */
+.t-body-14 {
+  font: 400 14px/20px var(--font-ui);
+  color: var(--text-primary);
+}
+
+.t-body-14-med {
+  font: 500 14px/20px var(--font-ui);
+  color: var(--text-primary);
+}
+
+/* Emphasis inside body. */
+.t-bodystrong-14 {
+  font: 700 14px/20px var(--font-ui);
+  color: var(--text-primary);
+}
+
+/* Section overlines. Uppercase, and letter-spaced. */
+.t-label-12 {
+  font: 600 12px/16px var(--font-ui);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/*
+ * The one loose 12px style in the file: 12/21 Medium, drawn on the spoken
+ * instruction of 05.1 ("Hold the side button until the screen changes…"). It is
+ * an override on the node rather than a named style, but it is a real size and
+ * this file is the only place allowed to declare one.
+ */
+.t-note-12 {
+  font: 500 12px/21px var(--font-ui);
+  color: var(--text-primary);
+}
+
+/* Helper text, the approximate marker. The single most-used style in the file. */
+.t-caption-12 {
+  font: 400 12px/16px var(--font-ui);
+  color: var(--text-secondary);
+}
+
+.t-caption-12-semi {
+  font: 600 12px/16px var(--font-ui);
+  color: var(--text-secondary);
+}
+
+/*
+ * Text-sm/Medium — the one style in the file that is not Poppins.
+ *
+ * The terms checkbox on 04.4 and 04.5 comes from a shadcn kit rather than from
+ * the Airtel set, and its label is drawn in Geist 500 14/20. Same metrics as
+ * body/14 Med, different family. It is here rather than inline because this
+ * file is the only place allowed to set a size, and `--font-geist` and the
+ * `@fontsource/geist-sans/500` import already exist for it.
+ */
+.t-text-sm-med {
+  font: 500 14px/20px var(--font-geist);
+  color: var(--text-primary);
+}
+
+/* ------------------------------------------------------------- modifiers */
+
+.t-primary { color: var(--text-primary); }
+.t-secondary { color: var(--text-secondary); }
+.t-warning { color: var(--status-warning); }
+.t-heading { color: var(--text-heading); }
+.t-inverse { color: var(--text-inverse); }
+.t-alert { color: var(--text-alert); }
+.t-link { color: var(--text-link); }
+.t-success { color: var(--status-success); }
+.t-critical { color: var(--status-critical); }
+.t-center { text-align: center; }
+.t-nums { font-variant-numeric: tabular-nums; }

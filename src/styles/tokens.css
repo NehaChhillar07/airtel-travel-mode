@@ -1,0 +1,274 @@
+/**
+ * Design tokens — Airtel IR Experience.
+ *
+ * Names mirror the Figma Foundations board exactly (`bg/page` -> `--bg-page`).
+ * The board's own instruction is the rule this file enforces:
+ *
+ *   "Apply semantic tokens to layers, never the raw primitives."
+ *
+ * So: primitives are declared first and are NOT for component use. Components
+ * may only reference the semantic tokens below them. If a component needs a
+ * colour that has no semantic token, the token is missing — add it here rather
+ * than reaching past this file for a hex.
+ *
+ * Every value was read out of figma-export/raw/file.json, not eyeballed from a
+ * screenshot. The comments are the descriptions authored on the board itself.
+ */
+
+:root {
+  /* ------------------------------------------------------------ primitives
+     Raw ramp. Do not use these in components. */
+  --p-white: #ffffff;
+  --p-black: #000000;
+  --p-ink-900: #09090b;
+  --p-ink-850: #222222;
+  --p-ink-800: #292c31;
+  --p-ink-600: #696b6f;
+  --p-ink-500: #71717a;
+  --p-grey-200: #d9d9d9;
+  --p-grey-100: #f0f3f8;
+  --p-grey-050: #f8f9fe;
+  --p-lavender-050: #eff1fe;
+  --p-line-200: #cdd3dd;
+  --p-line-100: #e4e4e7;
+  --p-blue-600: #075ee8;
+  --p-blue-050: #e7f0ff;
+  --p-red-800: #8c2020;
+  --p-red-700: #b22020;
+  --p-red-600: #d73737;
+  --p-red-050: #fbdddd;
+  --p-red-legacy: #ca272c;
+  /* The wordmark red. Not --p-red-600: the airtel swoosh is drawn #E40000
+     everywhere in the file, and the label beside it is #D73737. */
+  --p-red-logo: #e40000;
+  /* And the springboard icon's red, hotter again than the wordmark's. */
+  --p-red-app: #ff0000;
+  --p-green-700: #2d8261;
+  --p-green-300: #79d099;
+  /* WhatsApp's own green. A third-party brand colour, not part of the Airtel
+     ramp — it exists so the logo can be drawn correctly and nothing else. */
+  --p-green-whatsapp: #25d366;
+  --p-amber-700: #7c4b10;
+  --p-amber-300: #ffd07b;
+
+  /* ------------------------------------------------------------- surfaces */
+  /*
+    Screen background.
+
+    The Foundations board defines `bg/page` as #EFF1FE and calls it the page
+    background — but the document does not use it that way. Every one of the 21
+    screen root frames is #FFFFFF, and #EFF1FE appears on exactly four nodes in
+    the whole file. The drawn screens win, so this is what a screen sits on.
+  */
+  --bg-screen: var(--p-white);
+
+  /* Page background. Cool lavender, sampled from the airtel chat screen.
+     Kept because the board defines it, but it is not the screen ground. */
+  --bg-page: var(--p-lavender-050);
+  /* Card. Barely lighter than the page, no border and no shadow. */
+  --bg-card: var(--p-grey-050);
+  /* A card that has to sit above another card. */
+  --bg-raised: var(--p-white);
+  /* Chips and the home filter tiles. */
+  --bg-chip: var(--p-grey-100);
+  /* Informational panel, from the post-purchase steps card. */
+  --bg-info: var(--p-blue-050);
+  /* Alert container. Airtel never uses a saturated red block. */
+  --bg-alert: var(--p-red-050);
+  /* Inverted chips — a dark fill carrying white type, for readouts that have to
+     hold against a white card. */
+  --bg-ink: var(--p-ink-800);
+  /* The same chip when what it reads out is money you did not mean to spend. */
+  --bg-alert-strong: var(--p-red-800);
+  /* Success fill, sampled from the confirmation tick. */
+  --bg-success: var(--p-green-300);
+  /* The unfilled half of a progress track. Reads on glass, where a hairline
+     grey would disappear into the wallpaper behind it. */
+  --bg-track: var(--p-grey-200);
+
+  /* ----------------------------------------------------------------- text */
+  /* Headings and hero values. 20:1 on bg/card. */
+  --text-heading: var(--p-black);
+  /* Default body. 13.3:1 on bg/card. */
+  --text-primary: var(--p-ink-800);
+  /* Muted and helper. 5.1:1 — AA but not AAA, so secondary content only. */
+  --text-secondary: var(--p-ink-600);
+  /* On black or on brand fills. */
+  --text-inverse: var(--p-white);
+  /* Sits on bg/alert. 7.0:1, AAA. */
+  --text-alert: var(--p-red-800);
+  /* Text actions only. Never used as a fill. */
+  --text-link: var(--p-blue-600);
+  /* Bottom-nav tab labels. A hair darker than text/primary, which is what the
+     file draws — it is the one place #222222 appears. */
+  --text-nav: var(--p-ink-850);
+
+  /* ------------------------------------------- action, brand and status */
+  /* The primary CTA in the Airtel app is BLACK, not red. */
+  --action-primary-fill: var(--p-black);
+  --action-primary-text: var(--text-inverse);
+  --action-primary-disabled: var(--p-ink-600);
+  /* Outline button, transparent fill. */
+  --action-secondary-border: var(--p-black);
+  /* Dividers only. Airtel separates surfaces by tint rather than by border. */
+  --border-subtle: var(--p-line-200);
+  --border-hairline: var(--p-line-100);
+  /* Wordmark, active nav tab, active chip underline. 4.45:1 — never below 18px. */
+  --brand: var(--p-red-600);
+  /* The swoosh itself, which is a shade hotter than the text beside it. */
+  --brand-logo: var(--p-red-logo);
+  /* The app icon's ground, as iOS draws it beside a notification. */
+  --brand-app-icon: var(--p-red-app);
+  /* Third-party marks. Trademarked, so they are drawn as published — never
+     tinted to the Airtel palette. */
+  --brand-whatsapp: var(--p-green-whatsapp);
+  /* Exhausted state only. */
+  --status-critical: var(--p-red-600);
+  /* Success only. Never the usage indicator. */
+  --status-success: var(--p-green-700);
+  --status-warning: var(--p-amber-700);
+
+  /* ------------------------------------------------------------ gradients
+     The first is the single most-used fill in the document (73 nodes) — it is
+     the resting state of every chip, tile and date field. */
+  --grad-chip: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
+  --grad-metal: linear-gradient(180deg, #7e8897 0%, #000000 100%);
+  --grad-ink: linear-gradient(180deg, rgba(41, 44, 49, 0.8) 0%, #000000 100%);
+  /* The same ink, run diagonally. The help card on 04.7 is drawn this way and
+     the dashboard's is drawn vertically, so both angles are real. */
+  --grad-ink-diag: linear-gradient(
+    101.06deg,
+    rgba(41, 44, 49, 0.8) -45.55%,
+    #000000 100.8%
+  );
+  --grad-blush: linear-gradient(180deg, #ffffff 0%, #fef7f7 100%);
+
+  /* The confirmed stamp on 04.7. Light at the top-left, deep at the bottom-
+     right, so the pill reads as a lit face rather than a flat fill. */
+  --grad-success: linear-gradient(135deg, #79d099 0%, #2d8261 100%);
+
+  /* --------------------------------------------------------------- radii
+     Ranked by usage in the document. --r-card (14) is the house radius. */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-card: 14px;
+  --r-field: 16px;
+  --r-xl: 24px;
+  --r-2xl: 32px;
+  --r-chip-outer: 35px;
+  --r-pill: 999px;
+  --r-sheet: 24px 24px 0 0;
+
+  /* ------------------------------------------------------ rings and shadows
+     Airtel separates surfaces by tint, so "borders" are nearly always inset
+     rings that do not consume layout space. */
+  --ring-subtle: inset 0 0 0 1px var(--border-subtle);
+  --ring-focus: inset 0 0 0 1px var(--text-link);
+  --ring-critical: inset 0 0 0 1px var(--status-critical);
+  /* The Active-chip treatment. Two nodes in Figma: a 3px white ring on the
+     inner background frame, and a 1px grey ring on the outer instance. */
+  --ring-selected-inner: inset 0 0 0 3px var(--p-white);
+  --ring-selected-outer: 0 0 0 1px var(--border-subtle);
+
+  --sh-card: 0 1px 4px rgba(0, 0, 0, 0.07);
+  /* The confirmed stamp. A green-tinted drop so the pill lifts off the page,
+     plus a lit top edge — the pair is what stops it reading as a flat chip. */
+  --sh-stamp: 0 6px 16px -4px rgba(45, 130, 97, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  --sh-check: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --sh-bar: 0 -1px 17.3px rgba(0, 0, 0, 0.1);
+  --sh-pop: 0 4px 24px -4px rgba(0, 0, 0, 0.16);
+  --sh-sheet: 0 -2px 28.9px rgba(0, 0, 0, 0.08);
+  --sh-tile-inset: inset 2px 2px 0.5px -2px rgba(255, 255, 255, 0.5);
+  /* The home bottom nav — "Overlay+Border+Shadow+OverlayBlur" in the file. The
+     drop and the white inner lift are one effect stack, so they are one token. */
+  --sh-navbar: 0 8px 24px rgba(0, 0, 0, 0.08),
+    inset 0 4px 22.4px rgba(255, 255, 255, 0.24);
+
+  /* iOS's own glass — the Live Activity (05.12) and every lock-screen banner
+     (05.7-05.13) are drawn on it. One material, so one set of tokens; the
+     class that applies them is in ios.css. Nothing in the product UI may use
+     these — see the note in that file.
+
+     The frame fills this at 0.1% white and lets a backdrop blur do the rest,
+     which is Figma's GLASS effect described in CSS rather than reproduced: on
+     the lock screen's own wallpaper, whose top half is black, blurring black
+     returns black and the banner disappears. So the fill is the ~12% white
+     iOS actually lightens a dark backdrop by, and the edge is a real 1px
+     hairline rather than only the frame's blurred outer ring. The drop, the
+     lit top edge and the inner grey glow are the export's, unchanged. */
+  --sh-glass-ios: 0 4px 24px -4px rgba(0, 0, 0, 0.16),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.22),
+    inset 2px 2px 0.5px -2px rgba(255, 255, 255, 0.5),
+    inset 0 0 8px rgba(160, 160, 160, 0.28);
+  --glass-ios: rgba(255, 255, 255, 0.12);
+  --glass-ios-halo: rgba(255, 255, 255, 0.28);
+  /* Saturate as well as blur: it is what makes a colourful wallpaper bloom
+     through the panel instead of turning grey behind it. */
+  --blur-ios: blur(14px) saturate(1.8);
+
+  --blur-chrome: blur(12px);
+  --blur-soft: blur(3px);
+  --blur-heavy: blur(21.2px);
+  /* Barely a blur. The nav floats over the product grid and only has to soften
+     it, not hide it. */
+  --blur-navbar: blur(1.95px);
+  /* Figma's GLASS effect exposes no parameters at all — its API payload is
+     literally {"type":"GLASS"}. This is an approximation, not a reproduction. */
+  --glass-fill: rgba(255, 255, 255, 0.55);
+  --glass-ring: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+  /* The bottom nav's own glass: a flat 50% white with a solid 2px white border
+     that does consume layout space, unlike the inset rings above. */
+  --glass-navbar: rgba(255, 255, 255, 0.5);
+  /* And the pill around the tab you are on, inside it. */
+  --glass-navbar-active: rgba(235, 235, 235, 0.5);
+
+  /* ------------------------------------------------------------ typefaces
+     Poppins stands in for Tondo, which is licensed. Inter is iOS system type
+     and belongs only to the notification chrome — see ios.css. */
+  --font-ui: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-ios: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-geist: 'Geist', var(--font-ui);
+
+  /* --------------------------------------------------------------- layout */
+  --frame-w: 393px;
+  --frame-h: 852px;
+  /* The trip screen's hero band. Shared, because the short home -> travel
+     transition grows a pane to exactly this height and would otherwise be
+     carrying a copy of the number. */
+  --hero-h: 175px;
+  --gutter: 20px;
+  --content-w: 353px;
+  --card-w: 343px;
+  --pack-w: 354px;
+
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-7: 32px;
+  --s-8: 40px;
+
+  --statusbar-h: 54px;
+  --header-h: 72px;
+  --navbar-h: 44px;
+  --tilerow-h: 89px;
+
+  /* --------------------------------------------------------------- motion */
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --ease-inout: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-press: 140ms;
+  --dur-fast: 200ms;
+  --dur-base: 240ms;
+  --dur-slow: 380ms;
+
+  /* ----------------------------------------------------------------- z */
+  --z-sticky: 10;
+  --z-sheet: 40;
+  --z-portal: 50;
+  --z-toast: 60;
+}

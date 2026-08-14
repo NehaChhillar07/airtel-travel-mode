@@ -1,0 +1,317 @@
+/**
+ * The Travel Mode curtain.
+ *
+ * The set piece states the problem the whole project is about and then turns it
+ * over into the answer. That is what the split-flap is for: a board exists to
+ * make one thing become another, and flapping in from nothing wastes it.
+ *
+ * On red. Flooding the screen would break the Foundations rule that Airtel
+ * never uses a saturated red block, so the red arrives in five small places
+ * instead — the swoosh, the label, the rule, the cards, and one brief bloom
+ * behind the word as it lands. Five small reds read as more brand presence
+ * than one big one, and nothing has to be broken to get there.
+ *
+ * TWO LAYERS, and the reason matters. The ground grows out of whatever was
+ * tapped by scaling, which is cheap and cannot reflow — but `transform: scale`
+ * scales children too, so anything inside would arrive at 15x. The content sits
+ * in its own unscaled layer above it.
+ */
+
+.curtain {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+/* The blush panel. Empty on purpose — it is the only thing that scales. */
+.ground {
+  position: absolute;
+  background: var(--grad-blush);
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* The teal hand-off, fading in over the blush at the end so the curtain is
+   already the hero band's colour by the time the trip screen is underneath. */
+/*
+  The exit is a circle opening from the middle.
+
+  It was a left-to-right sweep, which read as a page sliding in — a spatial
+  claim the sequence has not earned, since nothing here came from the right.
+  A circle from zero at the centre has no direction to justify: the curtain
+  simply washes out, and the corners go last.
+
+  WHITE, and this is the part that was wrong before.
+
+  It used to be a teal sampled off the hero GIF, so that it would dissolve
+  seamlessly into the trip screen's band. That made an ASSET the source of
+  truth for a transition: swap the GIF — or rotate three or four of them — and
+  the ending lands on a colour that no longer matches anything, differently
+  each session, without erroring. Content changes; that is what makes it
+  content, and it cannot be something else's source of truth.
+
+  White needs to know nothing. Every one of the 21 screen roots in the file is
+  #FFFFFF, so this is the ground the app actually sits on, and it is the right
+  hand-off no matter what is playing in the band. It also turns out to be more
+  accurate than the teal ever was: the top 224px of the trip screen is chrome,
+  not artwork, so the thing the curtain hands over to was always white.
+
+  Blush would have been the closer loop — it is what the curtain opens on — but
+  the ground is already blush, so a blush iris would be invisible against it.
+  White was the correction and it was not one: the ground runs #FFFFFF at the
+  top to #FEF7F7 at the bottom, so a white disc is the IDENTICAL colour for the
+  top half of the screen and 8/255 different at the very bottom. The wash was
+  still running, still covering, and completely invisible — which from the
+  outside is the same as having deleted it.
+
+  So the visibility moved to the EDGE. The fill stays white, because that is
+  what makes the hand-off independent of whatever is playing in the band; the
+  leading edge is Airtel red, because a hairline sweeping out of the middle is
+  unmistakable against blush, against the red board it crosses, and against
+  anything else this sequence might ever hold. Red in motion, never as a block
+  — which is the Foundations rule kept rather than bent.
+
+  SIZE, NOT SCALE, and that is the whole reason this is not a transform.
+  `transform: scale` is cheaper and it is what this used to use, but it scales
+  the border with everything else: a 2px ring at 24x arrives as a 48px red
+  band. Animating the box means the ring stays 2px the entire way out. It is
+  one empty, absolutely positioned element, so nothing else relayouts.
+
+  Centred with a CONSTANT translate, not with `inset: 0; margin: auto`. The
+  margin trick centres a box of changing size right up until the box is wider
+  than its container, and then it silently stops: the over-constrained case is
+  resolved by pinning `margin-left: 0` and solving for the right margin, so the
+  circle stuck to the left edge and grew rightward. The visible symptom was a
+  red arc loitering down the left of the screen long after the sweep should
+  have left through the corners. `translate(-50%, -50%)` is a proportion of the
+  element's own size, so it holds at every size — and being constant, it does
+  not scale the border the way an animated `scale` would.
+*/
+.pop {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: content-box;
+  border-radius: 50%;
+  /* The gradient rides on top; the white underneath is what actually covers. */
+  background:
+    radial-gradient(
+      circle closest-side,
+      rgba(215, 55, 55, 0) calc(100% - 16px),
+      rgba(215, 55, 55, 0.07) calc(100% - 10px),
+      rgba(215, 55, 55, 0.20) calc(100% - 5px),
+      rgba(215, 55, 55, 0.38) calc(100% - 2px),
+      rgba(215, 55, 55, 0.5) 100%
+    ),
+    var(--bg-screen);
+  /*
+    A ring of light, with no line in it anywhere.
+
+    A solid stroke read as technical — a debug outline rather than light, and
+    everything else in this system is soft. So there is no stroke at all: the
+    edge is a band of red that fades to nothing in both directions, and the only
+    thing with a defined boundary is the white fill doing the covering.
+
+    Built from two falloffs that meet at the edge and never resolve to a stroke:
+    a radial gradient carries the glow INWARD from the boundary, and box-shadows
+    carry it OUTWARD. Both peak at the same alpha at the same place, so the
+    handover is continuous and there is no hard core hiding inside the bloom.
+
+    `closest-side` is load-bearing, and leaving it out is a subtle bug rather
+    than a subtle difference. A `radial-gradient(circle, ...)` defaults to a
+    FARTHEST-CORNER ending shape, so 100% is the distance to the box's corner —
+    1.41x the radius — and every stop written as an offset from "the edge" is
+    really an offset from a point well outside the circle. The band ends up
+    sitting at ~0.7R and scaling its width with the circle, which is exactly the
+    fat pink donut this was trying not to be. `closest-side` makes 100% the
+    radius, so `calc(100% - 16px)` is genuinely 16px in from the edge at every
+    size.
+
+    box-shadow rather than filter: blur() — a filter re-rasterises the whole
+    element every frame, and this one grows to cover the screen.
+
+    The shape of the falloff is what makes it read as light rather than as a
+    thick band: a bright, narrow crest right at the boundary, then a long gentle
+    fade inward over ~30px and a shorter one outward. An even plateau across the
+    same width just looks like a fat pink ring.
+
+    Width matters as much as shape. The first pass ran ~30px of falloff either
+    side, which is 60px of pink crossing a 393px screen — 15% of the width, and
+    it read as a donut no matter how softly it was drawn. Roughly 15px in and
+    16px out is the point where it stops being an object and starts being a
+    glow.
+  */
+  border: none;
+  box-shadow:
+    0 0 6px 0 rgba(215, 55, 55, 0.40),
+    0 0 16px 1px rgba(215, 55, 55, 0.13);
+  pointer-events: none;
+  /* Above the content, so it covers rather than underlays. */
+  z-index: 2;
+}
+
+/* Unscaled. Everything readable lives here. */
+.content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /*
+    Top-anchored, not centred. The word flies to the middle of the frame and
+    then travels up into the lockup — if the lockup were vertically centred that
+    journey would be thirty pixels and would read as a wobble, not a move.
+  */
+  justify-content: flex-start;
+  padding: 132px 28px 0;
+}
+
+/* ------------------------------------------------------------- the swoosh */
+.mark {
+  color: var(--brand-logo);
+  margin-bottom: 10px;
+}
+
+/* ------------------------------------------------------------- the lockup
+   Where the word ends up: `airtel` above, `Travel Mode` below it. One word,
+   one journey — it arrives as the hero and settles as the product name. */
+.lockup {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+/* An invisible copy at final size, so the row reserves the right height while
+   the real word is mid-flight and out of flow. */
+.lockupGhost {
+  visibility: hidden;
+}
+
+/*
+  Centred by layout, not by a percentage translate.
+
+  This was `left: 50%` plus `translateX(-50%)`. That percentage resolves against
+  the element's OWN width — and ` Mode` expands from zero while the word is
+  travelling, so the element got wider mid-flight, the -50% grew with it, and
+  the word dragged left before settling back. Spanning the row and centring the
+  content with flex removes the coupling entirely: width can change whenever it
+  likes and the position never moves.
+*/
+.lockupWord {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  white-space: nowrap;
+  /*
+    Scaled about its own centre.
+
+    This was `left center`, on the reasoning that the -50% translate would keep
+    it centred. It does not: scaling 3.1x from the left edge pushes the glyphs
+    right of true centre by (scale - 1) x width / 2, so the word arrived visibly
+    off to the right and slid back as it shrank. Scaling about the centre
+    expands it evenly and it stays where it is put.
+  */
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* ---------------------------------------------------------------- the word
+   Rendered once, at lockup size, and scaled UP to be the hero. One element for
+   the whole sequence: there used to be a flying word and a separate label that
+   crossfaded, which read as two different words. */
+.word {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--action-primary-fill);
+}
+
+/* `Mode` is not part of the journey — it completes the phrase once the word has
+   landed. The word arrives; the app finishes the sentence. */
+.mode {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  color: var(--brand);
+  white-space: pre;
+}
+
+/* One breath of red behind the word as it stamps down, then gone. */
+.bloom {
+  position: absolute;
+  width: 210px;
+  height: 210px;
+  border-radius: var(--r-pill);
+  background: radial-gradient(circle, rgba(215, 55, 55, 0.3) 0%, rgba(215, 55, 55, 0) 68%);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------- the caption
+   The constant stem. The board completes the sentence, so this stays put while
+   the meaning underneath it reverses. */
+.caption {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1.16;
+  letter-spacing: -0.03em;
+  text-align: center;
+  color: var(--text-heading);
+}
+
+.rule {
+  width: 52px;
+  height: 3px;
+  margin: 20px 0 26px;
+  border-radius: var(--r-pill);
+  background: var(--brand);
+  transform-origin: center center;
+}
+
+/* ------------------------------------------------------------- the board */
+.board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*
+  Cards at curtain scale: bigger than a row would need, because the type above
+  them is bigger, and rounder, because Airtel is round. The first pass was
+  near-black at a 1.5px radius, which read as a railway platform.
+*/
+.flap {
+  --flap-w: 21px;
+  --flap-h: 33px;
+  --flap-size: 24px;
+  --flap-gap: 3px;
+  --flap-radius: 6px;
+  --board-card: var(--brand);
+  --board-card-lo: #c02b2b;
+  --board-char: #ffffff;
+  --board-seam: rgba(0, 0, 0, 0.15);
+  --board-edge: rgba(255, 255, 255, 0.26);
+}
+
+/* A way out, for anyone who has already seen it. */
+.skip {
+  position: absolute;
+  bottom: 38px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: var(--text-secondary);
+}

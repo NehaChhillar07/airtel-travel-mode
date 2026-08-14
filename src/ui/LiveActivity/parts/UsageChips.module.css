@@ -1,0 +1,31 @@
+/**
+ * `Frame 1321322868` — 6px between chips, 8x12 inside them, fully round.
+ */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: var(--r-pill);
+  background: var(--bg-ink);
+  color: var(--text-inverse);
+}
+
+/* The same chip when what it reads out is money you did not mean to spend. */
+.chipAlert {
+  background: var(--bg-alert-strong);
+}
+
+.emoji {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+

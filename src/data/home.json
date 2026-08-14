@@ -1,0 +1,119 @@
+{
+  "quickActions": [
+    {
+      "id": "all",
+      "label": "All",
+      "icon": "grid",
+      "opens": "home"
+    },
+    {
+      "id": "travel",
+      "label": "Travel",
+      "icon": "plane",
+      "opens": "trip"
+    },
+    {
+      "id": "wifi",
+      "label": "Wi-Fi",
+      "icon": "wifi"
+    },
+    {
+      "id": "postpaid",
+      "label": "Postpaid",
+      "icon": "sim"
+    },
+    {
+      "id": "bank",
+      "label": "Bank",
+      "icon": "bank"
+    }
+  ],
+  "services": [
+    {
+      "id": "postpaid",
+      "title": "Postpaid",
+      "subtitle": "Unlimited data",
+      "status": "Payment overdue",
+      "tone": "alert",
+      "icon": "sim"
+    },
+    {
+      "id": "roaming",
+      "title": "International Roaming",
+      "subtitle": "Your plan doesn’t work outside India",
+      "status": null,
+      "tone": "neutral",
+      "icon": "roaming",
+      "opens": "trip"
+    }
+  ],
+  "products": [
+    {
+      "id": "credit-card",
+      "label": "Credit Card",
+      "image": "/assets/3c7ba2d09f77265c09e70abaf5713ed0a0c06a1d.png"
+    },
+    {
+      "id": "wifi",
+      "label": "Wi-Fi",
+      "image": "/assets/cdc014cddbc5f450de448f9685915cc4838b4e95.png"
+    },
+    {
+      "id": "dth",
+      "label": "DTH",
+      "image": "/assets/84939caf68650e3295670cf821598e7100afaa00.png"
+    },
+    {
+      "id": "fd",
+      "label": "Fixed Deposit",
+      "image": "/assets/10aac52b591e4eeef050ab86e5a7536434ff688b.png"
+    },
+    {
+      "id": "insta-emi",
+      "label": "Insta EMI Card",
+      "image": "/assets/a9ff97dc3c51c762ae66381362ac8f9f3e614319.png"
+    },
+    {
+      "id": "gold-loan",
+      "label": "Gold Loan",
+      "image": "/assets/4c3362165bb5c01ea3bb2aaa592774857036bff8.png"
+    },
+    {
+      "id": "postpaid-sim",
+      "label": "Get Postpaid SIM",
+      "image": "/assets/c3cd3f7d03d61b27fc884fb19878c5073322a439.png"
+    },
+    {
+      "id": "bank",
+      "label": "Open Bank Account",
+      "image": "/assets/188409f590fba5f7960c5b9ad5a1bd98d8a23624.png"
+    },
+    {
+      "id": "prepaid-sim",
+      "label": "New Prepaid SIM",
+      "image": "/assets/f4ffcae6c1182711628b5352192de43ab5de8da1.png"
+    }
+  ],
+  "bottomNav": [
+    {
+      "id": "manage",
+      "label": "Manage",
+      "icon": "manage"
+    },
+    {
+      "id": "finance",
+      "label": "Finance",
+      "icon": "finance"
+    },
+    {
+      "id": "shop",
+      "label": "Shop",
+      "icon": "shop"
+    },
+    {
+      "id": "ask",
+      "label": "Ask Us",
+      "icon": "ask"
+    }
+  ]
+}

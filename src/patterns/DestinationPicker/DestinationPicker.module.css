@@ -1,0 +1,51 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.results {
+  overflow: hidden;
+  border-radius: var(--r-card);
+  background: var(--bg-raised);
+  box-shadow: var(--ring-subtle);
+}
+
+.resultsInner {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Keyboard highlight, distinct from the selected state so the two can coexist
+   on the same row. */
+.active {
+  box-shadow: inset 3px 0 0 var(--text-link);
+}
+
+/*
+  One horizontal row that scrolls, not a wrapping grid. The file draws five
+  chips running off the right edge of the frame; wrapping them to a second line
+  changes the shape of the screen.
+
+  The negative margin lets the row bleed to the frame edge while its contents
+  stay on the 353px column, so a chip can sit half-off the edge the way the
+  export shows.
+*/
+.chips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 calc(var(--gutter) * -1);
+  padding: 3px var(--gutter);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.chips::-webkit-scrollbar { display: none; }
+
+.chips > * { flex: 0 0 auto; }
+
+.status {
+  display: block;
+}

@@ -1,0 +1,141 @@
+/**
+ * iOS notification banner.
+ *
+ * One component, two jobs: the in-app toast and the lock-screen notifications
+ * on 05.7-05.13. They are the same object in the design, so they are the same
+ * component here — which also means a toast can never drift from the
+ * notification it is previewing.
+ *
+ * Type is Inter, not Poppins: this is operating-system chrome, not Airtel UI.
+ */
+
+.stack {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+/* The box, whichever surface it is drawn on. */
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  pointer-events: auto;
+  cursor: grab;
+  text-align: left;
+  width: 100%;
+}
+
+/*
+  The in-app toast's material — and ONLY the toast's.
+
+  Scoped with :not() rather than left as the default and unset below, because
+  the lock-screen banner takes its material from the `ios-glass` class in
+  ios.css. That is a single class in another stylesheet, so anything this file
+  declares at the same specificity wins on order alone and paints over it —
+  which is exactly what "background: none" here did, leaving the banner with no
+  fill and no edge at all.
+*/
+.banner:not(.onDark) {
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: var(--sh-pop), var(--glass-ring);
+  backdrop-filter: var(--blur-chrome);
+  -webkit-backdrop-filter: var(--blur-chrome);
+}
+
+/* `Notification` — 355 wide, 16px padded, 10px gap. The glass is ios-glass;
+   this is only the box it fills. */
+.onDark {
+  align-items: center;
+  gap: 10px;
+  width: 355px;
+  max-width: 100%;
+  padding: 16px;
+}
+
+/* Every line is drawn white in the frame — on glass, hierarchy is weight and
+   size, not opacity. */
+.onDark .title,
+.onDark .text,
+.onDark .at {
+  color: var(--text-inverse);
+  opacity: 1;
+}
+
+/* The time is `body/13` here rather than the toast's caption, and it never
+   wraps under a long title. */
+.onDark .at {
+  white-space: nowrap;
+}
+
+/* On the lock screen the app is named by its mark, not a caption. */
+.onDark .app { display: none; }
+
+/* `Notification Content` — 260 wide beside the 53px mark, title and body hard
+   against each other with no gap between them. */
+.onDark .body { gap: 0; }
+
+.onDark .head { align-items: flex-start; }
+
+.banner:active { cursor: grabbing; }
+
+/* The mark draws its own ground and its own 16px corner, so this only has to
+   keep it from being squeezed by a long title. */
+.icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+}
+
+.body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.head .title { flex: 1 1 auto; min-width: 0; }
+
+.app {
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.at {
+  flex: 0 0 auto;
+  color: var(--text-secondary);
+}
+
+.title {
+  color: var(--text-primary);
+}
+
+.text {
+  color: var(--text-primary);
+  opacity: 0.75;
+}
+
+/* Tone colours the title, not the mark: iOS never restyles an app icon, and a
+   green airtel icon would say the notification came from something else. */
+.toneAlert .title { color: var(--text-alert); }
+.toneSuccess .title { color: var(--status-success); }
+
+/* …and on the lock screen not even that. The glass is doing the work there and
+   a coloured line on it reads as a different app again. */
+.onDark .title { color: var(--text-inverse); }

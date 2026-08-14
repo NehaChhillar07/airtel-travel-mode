@@ -1,0 +1,102 @@
+/**
+ * One character cell of a split-flap board.
+ *
+ * A real Solari card is two halves hinged across the middle. The top leaf
+ * falls, and for the moment it is edge-on you see nothing — which is why a
+ * board reads as mechanical rather than as a crossfade. The cell here rotates
+ * about that same axis and swaps its glyph while it is edge-on, so the change
+ * is hidden inside the fold exactly as it is on the real thing.
+ */
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--flap-gap, 1.5px);
+  /* Without a perspective the rotation is an affine squash and the card reads
+     as a shutter closing rather than as a leaf falling towards you. */
+  perspective: 320px;
+  perspective-origin: 50% 50%;
+}
+
+.cell {
+  position: relative;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: var(--flap-w, 13px);
+  height: var(--flap-h, 22px);
+  border-radius: var(--flap-radius, 1.5px);
+  background: linear-gradient(
+    180deg,
+    var(--board-card) 0%,
+    var(--board-card) 49.6%,
+    var(--board-card-lo) 50.4%,
+    var(--board-card-lo) 100%
+  );
+  box-shadow: inset 0 0 0 0.5px var(--board-edge);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* The seam. Sits above the glyph so the character is genuinely cut in half by
+   it, the way print on a real card is. */
+.cell::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  margin-top: -0.5px;
+  background: var(--board-seam);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.glyph {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-board);
+  font-weight: 600;
+  font-size: var(--flap-size, 16px);
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--board-char);
+  /* Digits and letters must not change the cell width mid-tumble. */
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+
+/* A space is a gap in the board, not a blank card. */
+.gap {
+  flex: 0 0 auto;
+  width: calc(var(--flap-w, 13px) * 0.42);
+  height: var(--flap-h, 22px);
+}
+
+.dim .glyph {
+  color: var(--board-char-dim);
+}
+
+/* Reduced motion gets the destination, not a shorter tumble. */
+@media (prefers-reduced-motion: reduce) {
+  .cell {
+    transform: none !important;
+  }
+}
+
+/* The mechanism coming to rest. Applied for 220ms as the last card lands. */
+.clatter {
+  animation: clatterStop 200ms cubic-bezier(0.3, 0, 0.2, 1);
+}
+
+@keyframes clatterStop {
+  0%   { transform: translateY(0); }
+  28%  { transform: translateY(2px); }
+  62%  { transform: translateY(-1px); }
+  100% { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clatter { animation: none; }
+}
