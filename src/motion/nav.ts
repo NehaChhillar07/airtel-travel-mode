@@ -104,7 +104,29 @@ export const screenVariants: Variants = {
       relationship to travel along — the row does not move, so nothing should.
     */
     if (dir === 'instant') return { x: 0, opacity: 1, scale: 1, zIndex: ABOVE }
-    return { x: 0, opacity: 0, scale: 0.985, zIndex: BELOW }
+    /*
+      `jump` — opaque, on top, from the first frame.
+
+      This used to be a true cross-fade: the incoming screen faded up from 0
+      while the outgoing faded down. One click read fine. Clicking down the
+      index did not, because `mode="sync"` starts a new fade without waiting
+      for the last, and the fades are independent — five layers were live at
+      once, an old screen sitting at 0.8 over the new one at 0.2. What you saw
+      was the previous screen ghosted over the incoming until the pile drained.
+
+      Tuning the durations would only have made the pile shallower. So the jump
+      now works the way the reveal does, and for the same reason: the arriving
+      screen is opaque and covers the stage from frame one, which makes a
+      double exposure structurally impossible rather than merely brief. Stale
+      layers can stack up all they like underneath — nothing can be seen
+      through an opaque screen.
+
+      The life comes from scale, and it scales DOWN from slightly over 100%.
+      Coming up from 0.985 would have left a 3px rim of the old screen showing
+      around the new one for the length of the transition; starting over-size
+      means the incoming layer never uncovers an edge at any point.
+    */
+    return { x: 0, opacity: 1, scale: 1.006, zIndex: ABOVE }
   },
   center: (dir: NavDirection) => ({
     x: 0,
@@ -139,6 +161,19 @@ export const screenVariants: Variants = {
         transition, and that one wins.
       */
       return { x: 0, opacity: 0, scale: 1, zIndex: BELOW, transition: { duration: 0 } }
-    return { x: 0, opacity: 0, scale: 1.01, zIndex: ABOVE }
+    /*
+      `jump` — gone on the next frame, for the same reasons as `instant`.
+
+      Nothing here is watchable: the incoming screen is opaque and above this
+      one, so whatever this layer does it does out of sight. What matters is
+      that it stops existing promptly. It used to fade over 240ms and inherit
+      its transition from whatever the layer was created with — a spring, if it
+      had arrived by a push — so a stale screen could sit mounted for half a
+      second past the point anyone could see it, and eight of them could be
+      mounted at once. The transition is declared on the variant so it cannot
+      be inherited, and the opacity change is what tells AnimatePresence it is
+      finished.
+    */
+    return { x: 0, opacity: 0, scale: 1, zIndex: BELOW, transition: { duration: 0 } }
   },
 }
