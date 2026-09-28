@@ -30,7 +30,23 @@
   position: absolute;
   background: var(--grad-blush);
   transform-origin: center center;
-  will-change: transform;
+}
+
+/* The moving word is drawn at hero size (the lockup size times --hero-scale,
+   set from HERO_SCALE in the component) and scaled down to rest. Inline, so
+   "Travel" and " Mode" share one baseline. */
+.heroText {
+  display: inline-block;
+  white-space: pre;
+}
+
+.lockupWord .word,
+.lockupWord .mode {
+  font-size: calc(17px * var(--hero-scale));
+}
+
+.lockupWord .mode {
+  display: inline-block;
 }
 
 /* The teal hand-off, fading in over the blush at the end so the curtain is
@@ -196,19 +212,16 @@
   Centred by layout, not by a percentage translate.
 
   This was `left: 50%` plus `translateX(-50%)`. That percentage resolves against
-  the element's OWN width — and ` Mode` expands from zero while the word is
-  travelling, so the element got wider mid-flight, the -50% grew with it, and
-  the word dragged left before settling back. Spanning the row and centring the
-  content with flex removes the coupling entirely: width can change whenever it
-  likes and the position never moves.
+  the element's OWN width, so any change in width moved the word. It now spans
+  the lockup row exactly (the ghost sets the row's size) and centres its content
+  both ways, so the hero-sized text overflows the row evenly and scales down
+  into it about the row's own centre.
 */
 .lockupWord {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
+  inset: 0;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: center;
   white-space: nowrap;
   /*
@@ -221,7 +234,23 @@
     expands it evenly and it stays where it is put.
   */
   transform-origin: center center;
-  will-change: transform;
+}
+
+/* The moving word is drawn at hero size (the lockup size times --hero-scale,
+   set from HERO_SCALE in the component) and scaled down to rest. Inline, so
+   "Travel" and " Mode" share one baseline. */
+.heroText {
+  display: inline-block;
+  white-space: pre;
+}
+
+.lockupWord .word,
+.lockupWord .mode {
+  font-size: calc(17px * var(--hero-scale));
+}
+
+.lockupWord .mode {
+  display: inline-block;
 }
 
 /* ---------------------------------------------------------------- the word

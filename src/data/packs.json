@@ -19,7 +19,7 @@
     ],
     "fairUse": "After the 40 GB, you'll get unlimited data at 80 Kbps for messaging, email and browsing.",
     "reasonTemplates": {
-      "fits": "Covers all {countryCount} countries and outlasts your {days} days by {slack}",
+      "fits": "Covers {coverage} and outlasts your {days} days by {slack}",
       "thin": "For maps and messages, if you call over Wi-Fi",
       "upsell": "Worth it if the trip stretches, or you fly again this month",
       "short": "Ends {shortBy} before you fly home"
@@ -41,7 +41,7 @@
     "perks": ["5 GB at full speed", "Incoming calls charged at standard roaming rates"],
     "fairUse": "Data stops at 5 GB. Nothing is charged beyond it — you simply run out.",
     "reasonTemplates": {
-      "fits": "Covers all {countryCount} countries for {days} days",
+      "fits": "Covers {coverage} for {days} days",
       "thin": "For maps and messages, if you call over Wi-Fi",
       "upsell": "Worth it if the trip stretches, or you fly again this month",
       "short": "Ends {shortBy} before you fly home"
@@ -68,7 +68,7 @@
     ],
     "fairUse": "After the 60 GB, unlimited data continues at 80 Kbps.",
     "reasonTemplates": {
-      "fits": "Covers all {countryCount} countries with room to spare",
+      "fits": "Covers {coverage} with room to spare",
       "thin": "For maps and messages, if you call over Wi-Fi",
       "upsell": "Worth it if the trip stretches, or you fly again this month",
       "short": "Ends {shortBy} before you fly home"
@@ -90,7 +90,7 @@
     "perks": ["30 GB high-speed data, then unlimited at 80 Kbps", "Ninety days — for a season, not a trip"],
     "fairUse": "After the 30 GB, unlimited data continues at 80 Kbps. No calls or SMS are included.",
     "reasonTemplates": {
-      "fits": "Covers all {countryCount} countries for {days} days",
+      "fits": "Covers {coverage} for {days} days",
       "thin": "For maps and messages, if you call over Wi-Fi",
       "upsell": "Worth it if the trip stretches, or you fly again this month",
       "short": "Ends {shortBy} before you fly home"

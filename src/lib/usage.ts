@@ -154,9 +154,20 @@ const MINS_LEFT_MAX = 0.58
 export function dayMinutesLeft(live: LiveTrip, pack: Pack | null, day: number): number {
   if (!pack || pack.voiceMins <= 0) return 0
   if (day >= live.dayOfTrip) return Math.max(0, pack.voiceMins - live.usage.voiceMinsUsed)
+  return minutesLeftAtEndOf(day, pack.voiceMins)
+}
 
+/**
+ * The generated end-of-day figure, on its own so advancing a day can seed
+ * today's minutes from it. Without that, advancing kept adding to one running
+ * total, and "Minutes left today · Resets midnight" fell day after day as if it
+ * never reset. Using the same figure here means a day reads the same while it
+ * is today and after it has become a past cell on the strip.
+ */
+export function minutesLeftAtEndOf(day: number, voiceMins: number): number {
+  if (voiceMins <= 0) return 0
   const fraction = MINS_LEFT_MIN + jitter(day) * (MINS_LEFT_MAX - MINS_LEFT_MIN)
-  return Math.round(pack.voiceMins * fraction)
+  return Math.round(voiceMins * fraction)
 }
 
 /**

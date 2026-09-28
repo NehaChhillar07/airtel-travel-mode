@@ -3,6 +3,7 @@ import { Fragment } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { COPY, EXPLAINERS, HOME } from '../../data'
 import { fill, fullSpeedGb, inr } from '../../lib/format'
+import { dataFraction } from '../../lib/usage'
 import { collapse } from '../../motion/presets'
 import { ActionRows, DrainCard, HelpCard } from '../../patterns/TripActions/TripActions'
 import { TripProgress } from '../../patterns/TripProgress/TripProgress'
@@ -62,10 +63,21 @@ export function Dashboard() {
     fup: pack ? fullSpeedGb(pack) : 0,
     validity: pack?.validityDays ?? 0,
     price: pack ? inr(pack.priceExGst) : '—',
+    // Same 85% line the data meter turns red at, so the row and the meter agree.
+    headroom: dataFraction(live, pack) >= 0.85 ? 'You are close to it now.' : 'Plenty left for now.',
   }
 
   const actions = EXPLAINERS.filter((e) => e.group === 'actions')
-  const drains = EXPLAINERS.filter((e) => e.group === 'drain')
+  /*
+    "Turn off roaming" only once charges are uncapped, i.e. the pack has run
+    out. While the pack is live the day's rate resets at midnight, and offering
+    it in a healthy state invites her to cut off her own OTPs to save money she
+    is not losing. Voicemail divert stays: it bills per call either way.
+  */
+  const uncapped = pack ? live.dayOfPack > pack.validityDays : false
+  const drains = EXPLAINERS.filter(
+    (e) => e.group === 'drain' && (e.id !== 'drain-roaming' || uncapped),
+  )
   const charges = ledger.filter((e) => e.kind !== 'pack')
 
   function onDrain(id: string) {
@@ -175,10 +187,10 @@ export function Dashboard() {
           <span className={clsx(s.simLabel, 't-caption-12', 't-secondary')}>
             Prototype controls — the trip is {live.dayOfPack} days in
           </span>
-          <button className={clsx(s.ledgerAction, 't-body-14-med')} onClick={() => advanceDay(1)}>
+          <button className={clsx(s.ledgerAction, 't-body-14-med')} onClick={() => advanceDay(1, pack?.voiceMins ?? 0)}>
             Advance a day
           </button>
-          <button className={clsx(s.ledgerAction, 't-body-14-med')} onClick={() => advanceDay(3)}>
+          <button className={clsx(s.ledgerAction, 't-body-14-med')} onClick={() => advanceDay(3, pack?.voiceMins ?? 0)}>
             Advance 3 days
           </button>
           <button

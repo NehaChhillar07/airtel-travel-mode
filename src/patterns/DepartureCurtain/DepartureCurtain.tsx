@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
 import { usePortalContainer } from '../../app/DeviceFrameContext'
 import { COPY } from '../../data'
@@ -38,8 +38,14 @@ interface DepartureCurtainProps {
 }
 
 /**
- * The word is laid out at 17px in the lockup and scaled up to be the hero, so
- * one element covers the whole journey. 3.1 puts it a little over 52px.
+ * How much bigger the word is as the hero than in the lockup: 17px to a little
+ * over 52px.
+ *
+ * The word is drawn at the hero size and scaled DOWN into the lockup, never up.
+ * It used to be laid out at 17px and scaled up 3.1x under `will-change:
+ * transform`, which makes the browser rasterise the text once at 17px and
+ * stretch that bitmap, so the hero word was soft and then snapped sharp. Text
+ * scaled down from its largest size stays crisp the whole way.
  */
 const HERO_SCALE = 3.1
 
@@ -90,6 +96,29 @@ export function DepartureCurtain({
   const container = usePortalContainer()
   const reduced = useReducedMotion()
   const { w: FRAME_W, h: FRAME_H } = useFrameSize(container)
+
+  /*
+    The width of " Mode" at hero size, read off the invisible lockup copy.
+
+    " Mode" is laid out from the first frame and only fades in, so nothing ever
+    changes size mid-animation. That puts "Travel" left of centre by half of
+    " Mode", so the flight carries that half as an x offset and the settle
+    removes it: "Travel" is centred as the hero and lands exactly where the
+    finished phrase needs it. The moving word waits for this measurement so its
+    first frame is already right; the layout effect runs before paint.
+  */
+  const ghostModeRef = useRef<HTMLSpanElement>(null)
+  const [modeW, setModeW] = useState<number | null>(null)
+  const [settled, setSettled] = useState(false)
+  useLayoutEffect(() => {
+    if (!origin) {
+      setModeW(null)
+      setSettled(false)
+      return
+    }
+    if (ghostModeRef.current) setModeW(ghostModeRef.current.offsetWidth * HERO_SCALE)
+  }, [origin])
+
   if (!container) return null
 
   /* How far below the lockup the frame's middle is — 247 on an 852 canvas. */
@@ -201,25 +230,41 @@ export function DepartureCurtain({
             <div className={s.lockup}>
               <span className={clsx(s.lockupGhost, s.word)} aria-hidden="true">
                 {c.word}
-                <span className={s.mode}> Mode</span>
+                <span ref={ghostModeRef} className={s.mode}> Mode</span>
               </span>
 
+              {modeW !== null && (
               <motion.span
                 className={s.lockupWord}
+                /*
+                  Only transform and opacity move, so every frame is composited
+                  rather than laid out. `will-change` is held while the word is
+                  travelling and dropped once it has settled, so the browser
+                  re-rasterises the resting text at its real size.
+                */
+                style={
+                  {
+                    '--hero-scale': HERO_SCALE,
+                    willChange: settled ? 'auto' : 'transform',
+                  } as CSSProperties
+                }
+                onAnimationComplete={() => {
+                  if (stated) setSettled(true)
+                }}
                 initial={
                   reduced
                     ? { opacity: 0 }
                     : {
                         opacity: 0,
-                        scale: HERO_SCALE * 0.24,
-                        x: fromX,
+                        scale: 0.24,
+                        x: fromX + (modeW / 2) * 0.24,
                         y: fromY + heroLift,
                       }
                 }
                 animate={
                   stated
-                    ? { opacity: 1, scale: 1, x: 0, y: 0 }
-                    : { opacity: 1, scale: HERO_SCALE, x: 0, y: heroLift }
+                    ? { opacity: 1, scale: 1 / HERO_SCALE, x: 0, y: 0 }
+                    : { opacity: 1, scale: 1, x: modeW / 2, y: heroLift }
                 }
                 /*
                   Eased, not sprung.
@@ -237,23 +282,26 @@ export function DepartureCurtain({
                       : { delay: d(200), duration: 0.62, ease: [0.33, 1, 0.68, 1] }
                 }
               >
-                <span className={s.word}>{c.word}</span>
-                {/* Completes the phrase only once the word has settled. */}
-                <motion.span
-                  className={s.mode}
-                  initial={{ opacity: 0, width: 0 }}
-                  animate={stated ? { opacity: 1, width: 'auto' } : { opacity: 0, width: 0 }}
-                  /*
-                    After the move, never during it. Opening it mid-flight
-                    changed the element's width while it was travelling, and the
-                    word slid sideways as a result.
-                  */
-                  transition={{ delay: stated ? 0.62 : 0, duration: 0.28, ease: [0.2, 0, 0, 1] }}
-                  style={{ overflow: 'hidden' }}
-                >
-                  {' Mode'}
-                </motion.span>
+                <span className={s.heroText}>
+                  <span className={s.word}>{c.word}</span>
+                  {/*
+                    Completes the phrase as the word lands. It already has its
+                    space, so it fades and eases in by a few pixels and nothing
+                    else moves. This used to animate `width` from 0 to auto: a
+                    layout change every frame that slid "Travel" sideways while
+                    the phrase grew.
+                  */}
+                  <motion.span
+                    className={s.mode}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={stated ? { opacity: 1, x: 0 } : { opacity: 0, x: -12 }}
+                    transition={{ delay: stated ? 0.4 : 0, duration: 0.32, ease: [0.2, 0, 0, 1] }}
+                  >
+                    {' Mode'}
+                  </motion.span>
+                </span>
               </motion.span>
+              )}
 
               {/* One breath of red behind the word as it stamps down. */}
               {!stated && (
@@ -267,12 +315,19 @@ export function DepartureCurtain({
               )}
             </div>
 
-            {/* The stem the board completes. */}
+            {/*
+              The stem the board completes.
+
+              It waits for the word to clear it. The word rises from the middle
+              of the frame into the lockup above this line and passes it about
+              0.27s into its 0.56s settle; fading in at 0.04s put the caption
+              under the moving word, and the two collided on the way up.
+            */}
             <motion.p
               className={s.caption}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: stated ? 1 : 0, y: stated ? 0 : 10 }}
-              transition={{ delay: stated ? 0.04 : 0, duration: 0.36, ease: [0.2, 0, 0, 1] }}
+              transition={{ delay: stated ? 0.24 : 0, duration: 0.36, ease: [0.2, 0, 0, 1] }}
             >
               {c.caption}
             </motion.p>
@@ -281,7 +336,7 @@ export function DepartureCurtain({
               className={s.rule}
               initial={{ scaleX: 0 }}
               animate={{ scaleX: stated ? 1 : 0 }}
-              transition={{ delay: stated ? 0.16 : 0, duration: 0.32, ease: [0.2, 0, 0, 1] }}
+              transition={{ delay: stated ? 0.3 : 0, duration: 0.32, ease: [0.2, 0, 0, 1] }}
             />
 
             {/* And the answer to it. */}

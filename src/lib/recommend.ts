@@ -61,7 +61,7 @@ export function rankPacks(packs: Pack[], trip: TripShape): PackScore[] {
 /**
  * Build the reason sentence for a pack against a trip.
  *
- * Tokens: {countryList} {countryCount} {days} {slack} {shortBy}
+ * Tokens: {countryList} {countryCount} {coverage} {days} {slack} {shortBy}
  */
 export function reasonFor(pack: Pack, trip: TripShape, key: keyof ReasonTemplates): string {
   const names = trip.destinations.map((iso) => COUNTRY_BY_ISO[iso]?.name).filter(Boolean)
@@ -74,9 +74,19 @@ export function reasonFor(pack: Pack, trip: TripShape, key: keyof ReasonTemplate
         ? `all ${numberWord(names.length)} countries`
         : joinWithAnd(names)
 
+  /* One country is named, not counted: "Covers all one countries" read as a
+     typo, and it was the first thing a single-destination trip saw. */
+  const coverage =
+    names.length === 0
+      ? 'your trip'
+      : names.length === 1
+        ? names[0]
+        : `all ${numberWord(names.length)} countries`
+
   return fill(pack.reasonTemplates[key], {
     countryList,
     countryCount: numberWord(names.length),
+    coverage,
     days: trip.days,
     // Reads as "outlasts your 9 days by one", the way the card is written.
     slack: surplus <= 0 ? 'nothing' : numberWord(surplus),

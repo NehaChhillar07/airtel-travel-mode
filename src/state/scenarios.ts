@@ -42,6 +42,14 @@ const DEPART = toISO(addDays(today(), 5))
 const RETURN = toISO(addDays(today(), 13))
 const RANGE = { from: DEPART, to: RETURN }
 
+/**
+ * The same trip, stretched to 25 Aug – 5 Sep. The ten-day pack outlasts the
+ * nine-day trip it was bought for, so the only honest way for it to end while
+ * she is still away is a trip that ran long. Day 11 of a nine-day trip had her
+ * paying roaming rates from her own sofa.
+ */
+const EXTENDED_RANGE = { from: DEPART, to: toISO(addDays(today(), 16)) }
+
 const THREE = ['SG', 'MY', 'AE']
 const RECOMMENDED = 'ir-asia-10d-2999'
 
@@ -211,12 +219,13 @@ export const SCENARIOS: Record<ScenarioId, Scenario> = {
     },
   },
 
-  /** 05.6 / 05.7 — the pack has run out and standard rates apply. */
+  /** 05.6 / 05.7 — the trip ran past the pack, and standard rates apply. */
   exhausted: {
     trip: {
       ...emptyTrip,
       ...filledTrip,
       ...emptyTripUi,
+      range: EXTENDED_RANGE,
       selectedPackId: RECOMMENDED,
       tcAccepted: true,
       status: 'confirmed',

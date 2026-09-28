@@ -93,7 +93,7 @@
   },
   "connected": {
     "title": "You’re in {country} and you’re connected",
-    "dayLine": "Day {dayOfPack} of {packDays}",
+    "dayLine": "Day {dayOfPack} of your {packDays}-day pack",
     "banner": "Connected {msisdn}"
   },
   "notConnected": {
@@ -115,7 +115,8 @@
     "helpTitle": "AIRTEL HELP CARD",
     "lowBalanceTitle": "Your pack is running low",
     "usageLate": "Your usage reaches us up to four hours late. The real figure may be lower",
-    "lowBalanceCta": "Add high-speed data"
+    "lowBalanceCta": "Add high-speed data",
+    "lowBalanceCtaDays": "Add more days"
   },
   "packEnded": {
     "title": "Your pack has ended.",

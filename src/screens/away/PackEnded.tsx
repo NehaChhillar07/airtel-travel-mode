@@ -76,16 +76,25 @@ export function PackEnded() {
     cannot fail to add up to it, and a day advanced adds a row rather than
     silently growing the number.
   */
+  /*
+    Pack day N falls on trip day N plus however late the pack started, so a
+    pack day's date is counted from the trip's start by that offset. The row
+    used to land one day early, and the ended line printed the trip's last day
+    rather than the pack's.
+  */
+  const packOffset = live.dayOfTrip - live.dayOfPack
+  const dateOfPackDay = (dayOfPack: number) =>
+    toISO(addDays(fromISO(range.from!), dayOfPack - 1 + packOffset))
+
   const overrunDays =
     pack && range.from
       ? Array.from({ length: daysOver }, (_, i) => {
           const dayOfPack = pack.validityDays + i + 1
-          const iso = toISO(addDays(fromISO(range.from!), live.dayOfTrip - daysOver + i - 1))
-          return { dayOfPack, iso, amount: SETTINGS.standardRoamingPerDay }
+          return { dayOfPack, iso: dateOfPackDay(dayOfPack), amount: SETTINGS.standardRoamingPerDay }
         })
       : []
 
-  const endedDate = range.to ? formatLongDate(range.to) : ''
+  const endedDate = pack && range.from ? formatLongDate(dateOfPackDay(pack.validityDays)) : ''
 
   return (
     <Screen
@@ -112,7 +121,7 @@ export function PackEnded() {
           <div className={s.head}>
             <span className={clsx(s.headDay, 't-label-12')}>
               {fill(COPY.dashboard.dayLine, {
-                dayOfTrip: Math.min(live.dayOfTrip, tripDays),
+                dayOfTrip: live.dayOfTrip,
                 tripDays,
               })}
             </span>

@@ -4,8 +4,8 @@
     "screen": "05.13",
     "app": "Airtel",
     "at": "34m ago",
-    "title": "🇸🇬 You are in {country}, and you are online",
-    "body": "Your pack went live by itself. Day {dayOfTrip} of {tripDays} · unlimited data · about {mins} minutes of calls a day.",
+    "title": "{flag} You are in {country}, and you are online",
+    "body": "Your pack went live by itself. Day {dayOfTrip} of your {tripDays}-day trip · unlimited data · about {mins} minutes of calls a day.",
     "opens": "connected",
     "tone": "success"
   },
@@ -44,7 +44,7 @@
     "screen": "05.08",
     "app": "Airtel",
     "at": "1h ago",
-    "title": "Your pack ends tomorrow",
+    "title": "Your pack ends {endsWhen}",
     "body": "{price} adds another {validity} days. Nothing happens automatically.",
     "opens": "dashboard",
     "tone": "alert"

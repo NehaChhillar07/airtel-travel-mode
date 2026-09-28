@@ -4,9 +4,9 @@ import { addDays } from 'date-fns'
 import { AlertTriangle, WifiOff } from 'lucide-react'
 import { COPY } from '../../data'
 import { formatLongDate, formatOrdinalShort, fromISO, toISO } from '../../lib/dates'
-import { fill, fullSpeedGb } from '../../lib/format'
+import { fill, fullSpeedGb, pluralise } from '../../lib/format'
 import type { Country, LiveTrip, Pack, TripProgressVariant } from '../../lib/types'
-import { daySnapshot } from '../../lib/usage'
+import { dataFraction, daySnapshot } from '../../lib/usage'
 import { ProgressBar } from '../../ui/primitives'
 import { DayStrip } from './parts/DayStrip'
 import { Tally } from '../../ui/Tally/Tally'
@@ -191,7 +191,7 @@ export function TripProgress({
               </span>
               <span className={clsx(s.headEnd, 't-caption-12')}>
                 <span>{range.to ? `Ends ${formatLongDate(range.to)}` : ''}</span>
-                <span>{Math.max(0, tripDays - viewDay + 1)} days left</span>
+                <span>{Math.max(0, tripDays - viewDay + 1)} {pluralise(Math.max(0, tripDays - viewDay + 1), 'day', 'days')} left</span>
               </span>
             </div>
 
@@ -364,9 +364,15 @@ export function TripProgress({
               high-speed data" row, and two live routes to the same place is
               one more than the frame has — this is the frame's CTA, present
               and styled, but it does not take you anywhere. */}
+          {/* It names what is actually running out. Low can mean days as
+              well as data, and on the last days of a light trip the red
+              button used to offer more data right above a row saying there
+              was plenty left. */}
           {low && (
             <div className={clsx(s.lowCta, 't-value-16-med')} aria-hidden="true">
-              {COPY.dashboard.lowBalanceCta}
+              {dataFraction(live, pack) >= 0.85
+                ? COPY.dashboard.lowBalanceCta
+                : COPY.dashboard.lowBalanceCtaDays}
             </div>
           )}
         </div>

@@ -28,10 +28,33 @@
   pointer-events: none;
 }
 
-/* Date above the clock, as iOS stacks them. */
-/* The height the baked-in clock occupies, so the banners start below it. */
-.clockSpacer {
+/* Covers the status bar, date and clock baked into the wallpaper photo. The
+   photo is pure black down to well below the clock, so the edge never shows. */
+.wallpaperMask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 240px;
+  background: #000;
+}
+
+/* The wallpaper and its mask are positioned, so an unpositioned status bar
+   painted underneath them. This lifts it back on top. */
+.statusLayer {
+  position: relative;
+}
+
+/* Date above the clock, as iOS stacks them. Same 168px the baked-in clock took,
+   so the banners start where they always did. */
+.clock {
+  position: relative;
   height: 168px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 18px;
+  color: #fff;
 }
 
 .date {
@@ -59,45 +82,7 @@
 /* ---------------------------------------------------------- Live Activity */
 
 /* The widget itself is ui/LiveActivity. This is only where it sits: 355 wide
-   centred in the 393 frame, below the clock the wallpaper already carries. */
+   centred in the 393 frame, below the clock. */
 .islandWrap {
   padding: 40px 19px 0;
 }
-
-/* Flashlight and camera, and the home indicator — the furniture that makes a
-   lock screen read as one. */
-.furniture {
-  position: absolute;
-  bottom: 84px;
-  left: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 40px;
-  pointer-events: none;
-}
-
-.furnitureBtn {
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  border-radius: var(--r-pill);
-  background: rgba(0, 0, 0, 0.35);
-  color: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.homeBar {
-  position: absolute;
-  bottom: 9px;
-  left: 50%;
-  width: 140px;
-  height: 5px;
-  margin-left: -70px;
-  border-radius: var(--r-pill);
-  background: rgba(255, 255, 255, 0.85);
-}
-

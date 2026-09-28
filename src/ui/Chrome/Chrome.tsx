@@ -38,7 +38,7 @@ export function StatusBar({ time = '6:20', battery = 90, dark, carrier }: Status
        is installed to a home screen and the device draws its own status bar —
        see the standalone block in app.css. */
     <div className={clsx(s.status, dark && s.statusDark)} data-chrome="status">
-      <span className={clsx('t-bodystrong-14', 't-nums', !dark && 't-heading')}>
+      <span className={clsx('t-bodystrong-14', 't-nums', dark ? 't-inverse' : 't-heading')}>
         {carrier ?? time}
       </span>
       <div className={s.statusIcons} aria-hidden="true">

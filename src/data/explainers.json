@@ -3,7 +3,7 @@
     "id": "high-speed",
     "group": "actions",
     "title": "Add high-speed data",
-    "body": "Only needed after {fup} GB, once your speed drops. Plenty left for now.",
+    "body": "Only needed after {fup} GB, once your speed drops. {headroom}",
     "trailing": "chevron",
     "icon": "speed"
   },

@@ -49,6 +49,8 @@ export function Connected() {
     fup: pack ? fullSpeedGb(pack) : 0,
     validity: pack?.validityDays ?? 0,
     price: pack ? inr(pack.priceExGst) : '—',
+    // Day one of the pack: nothing has been used yet.
+    headroom: 'Plenty left for now.',
   }
 
   const actions = EXPLAINERS.filter((e) => e.group === 'actions')

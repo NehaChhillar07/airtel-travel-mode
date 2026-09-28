@@ -1,12 +1,13 @@
-import { Camera, Flashlight } from 'lucide-react'
 import { AnimatePresence } from 'motion/react'
 import { useEffect } from 'react'
 import { NOTIFICATION_BY_ID } from '../../data'
-import { toISO, today } from '../../lib/dates'
+import { addDays } from 'date-fns'
+import { formatLockDate, fromISO, toISO } from '../../lib/dates'
 import { fill, fullSpeedGb, inr } from '../../lib/format'
 import { unexpectedSpend } from '../../lib/pricing'
-import { dataFraction, minsLeft, smsLeft } from '../../lib/usage'
+import { dataFraction, minsLeft, packDaysLeft, smsLeft } from '../../lib/usage'
 import { useLiveStore } from '../../state/liveStore'
+import { useTripStore } from '../../state/tripStore'
 import { useCurrentCountry, useSelectedPack, useTripDays } from '../../state/selectors'
 import type { RouteId } from '../../app/routes'
 import { useUiStore } from '../../state/uiStore'
@@ -32,6 +33,7 @@ export function LockScreen() {
   const tripDays = useTripDays()
   const country = useCurrentCountry()
   const live = useLiveStore()
+  const range = useTripStore((x) => x.range)
 
   const notificationId = useUiStore((x) => x.notificationId)
   const setNotification = useUiStore((x) => x.setNotification)
@@ -54,16 +56,30 @@ export function LockScreen() {
   /* The bar and the rail have to agree, so both read the same fraction. */
   const progress = tripDays > 0 ? Math.min(1, live.dayOfTrip / tripDays) : 0
 
-  void today
-  void toISO
+  /*
+    The lock screen's date is the trip's date, not the day the wallpaper was
+    photographed. The wallpaper used to carry its own "Thu 13 Aug · 6:26",
+    twelve days before this trip even starts; that strip is now painted over
+    and the date comes from the same trip day the banners are counting.
+  */
+  const lockDate = range.from
+    ? formatLockDate(toISO(addDays(fromISO(range.from), Math.max(0, live.dayOfTrip - 1))))
+    : ''
+
+  /* "tomorrow" only when it is. Pack days left counts today. */
+  const daysLeft = packDaysLeft(live, pack)
+  const endsWhen =
+    daysLeft <= 1 ? 'tonight' : daysLeft === 2 ? 'tomorrow' : `in ${daysLeft - 1} days`
 
   const tokens = {
+    flag: country?.flagEmoji ?? '',
     country: country?.name ?? 'Singapore',
     dayOfPack: live.dayOfPack,
     dayOfTrip: live.dayOfTrip,
-    mins: 100,
+    mins: pack?.voiceMins ?? 0,
     packDays: pack?.validityDays ?? 0,
-    amount: inr(41),
+    amount: inr(extra),
+    endsWhen,
     dataPct: `${Math.round(dataFraction(live, pack) * 100)}%`,
     fup: pack ? fullSpeedGb(pack) : 0,
     price: pack ? inr(pack.priceExGst) : '—',
@@ -91,13 +107,19 @@ export function LockScreen() {
         src="/assets/f643f0a57e7b794f33f8c123ddb7a38ce983ac46.png"
         alt=""
       />
+      {/* `image 9` is a full lock-screen capture with its own status bar, date
+          and clock baked in. Its top is plain black, so that strip is painted
+          over and the date and clock are drawn from the trip instead. */}
+      <span className={s.wallpaperMask} aria-hidden="true" />
       <span className={s.wash} aria-hidden="true" />
-      <StatusBar dark carrier="Jio" battery={86} />
+      <div className={s.statusLayer}>
+        <StatusBar dark carrier="airtel" battery={86} />
+      </div>
 
-      {/* No clock here on purpose: `image 9` is a full lock-screen capture and
-          already carries the date and time. Drawing our own stacked a second
-          clock over the first. */}
-      <div className={s.clockSpacer} />
+      <div className={s.clock}>
+        <span className={s.date}>{lockDate}</span>
+        <span className={s.time}>6:26</span>
+      </div>
 
       {showLiveActivity ? (
         <div className={s.islandWrap}>
@@ -137,15 +159,9 @@ export function LockScreen() {
         </div>
       )}
 
-      <div className={s.furniture} aria-hidden="true">
-        <span className={s.furnitureBtn}>
-          <Flashlight size={20} strokeWidth={2} />
-        </span>
-        <span className={s.furnitureBtn}>
-          <Camera size={20} strokeWidth={2} />
-        </span>
-      </div>
-      <span className={s.homeBar} aria-hidden="true" />
+      {/* No drawn flashlight, camera or home bar: the wallpaper photo already
+          carries all three, and drawing them again stacked a second set a
+          few pixels off the first. */}
     </div>
   )
 }
