@@ -5,9 +5,9 @@ Roaming, sorted before you fly. A working frontend prototype of an international
 **Live: [airtel-travel-mode.vercel.app](https://airtel-travel-mode.vercel.app)** · **Case study: [nc-designs.vercel.app/case-study/airtel-travel-mode](https://nc-designs.vercel.app/case-study/airtel-travel-mode)**
 
 <p align="center">
-  <img src="docs/screenshots/trip-creation.png" alt="Trip creation screen with destination search and dates" width="260" />
-  <img src="docs/screenshots/dashboard.png" alt="In-trip dashboard showing usage and days left" width="260" />
-  <img src="docs/screenshots/lock-screen.png" alt="Lock screen with the roaming live activity" width="260" />
+  <img src="docs/screenshots/trip-creation.png" alt="Trip creation screen with destination search and dates" width="220" />
+  <img src="docs/screenshots/dashboard.png" alt="In-trip dashboard showing usage and days left" width="220" />
+  <img src="docs/screenshots/lock-screen.png" alt="Lock screen with the roaming live activity" width="220" />
 </p>
 
 I designed the flow in Figma, then rebuilt all 22 screens as 13 real routes on a token system. Search filters real data, chips toggle, the calendar picks a real date range, and every price and day count downstream is derived from what you entered. No backend: data is JSON, logic is pure functions, state lives in the browser.
