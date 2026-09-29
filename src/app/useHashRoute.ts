@@ -1,6 +1,9 @@
 import { useEffect } from 'react'
 import { parseHash, serialiseHash } from './hash'
 import { useUiStore } from '../state/uiStore'
+import { useTripStore } from '../state/tripStore'
+import { applyEntry } from './applyEntry'
+import { FIGMA_INDEX } from './routes'
 
 /**
  * Keeps `location.hash` in step with the route.
@@ -31,7 +34,22 @@ export function useHashRoute() {
     const apply = () => {
       const { route: parsed, sheet: parsedSheet } = parseHash(window.location.hash)
       const ui = useUiStore.getState()
-      if (parsed && parsed !== ui.route) ui.jump(parsed)
+      if (parsed && parsed !== ui.route) {
+        /*
+          A link pasted into a tab that is already open arrives here, not
+          through the boot path in useIndexSync, so without this the screen
+          rendered against an empty trip: "0 Days", "Day 0 of 0". Seed the
+          route's base scenario, but only while nothing has been built yet,
+          so a trip the reviewer made by hand is never replaced.
+        */
+        const entry = FIGMA_INDEX.find((e) => e.route === parsed)
+        if (entry && useTripStore.getState().destinations.length === 0) {
+          applyEntry(entry)
+          ui.jump(parsed, entry.figma)
+        } else {
+          ui.jump(parsed)
+        }
+      }
       if (JSON.stringify(parsedSheet) !== JSON.stringify(ui.sheet)) {
         if (parsedSheet) ui.openSheet(parsedSheet)
         else ui.closeSheet()
